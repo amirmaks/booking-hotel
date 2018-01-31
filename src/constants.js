@@ -19,11 +19,10 @@ export const API_WITHOUT_PARAMS = {
     only_cover_image: 1,
     without_hotel_rooms_types: 1
 };
-export const API_REQUIRED_PARAMS = {
-    as_json: 1,
-    limit: DATA_LIMIT
-};
 
 export const START = '_START';
 export const SUCCESS = '_SUCCESS';
 export const FAIL = '_FAIL';
+
+export const LOAD_ALL_HOTELS = 'LOAD_ALL_HOTELS';
+export const LOAD_HOTEL = 'LOAD_HOTEL';
