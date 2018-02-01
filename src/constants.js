@@ -26,3 +26,6 @@ export const FAIL = '_FAIL';
 
 export const LOAD_ALL_HOTELS = 'LOAD_ALL_HOTELS';
 export const LOAD_HOTEL = 'LOAD_HOTEL';
+
+export const LOAD_ALL_ROOMS = 'LOAD_ALL_ROOMS';
+export const LOAD_ALL_BOOKINGS = 'LOAD_ALL_BOOKINGS';

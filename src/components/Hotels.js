@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {loadAllHotels} from "../AC/hotels";
 import {mapToArr} from "../helpers";
 import {NavLink} from "react-router-dom";
+import Loader from './Loader';
 
 class Hotels extends React.Component {
 
@@ -14,7 +15,13 @@ class Hotels extends React.Component {
     }
 
     render() {
-        const hotels = mapToArr(this.props.hotels.results).map(hotel => (
+        const {hotels} = this.props;
+
+        if( !hotels.loaded ) {
+            return <Loader/>
+        }
+
+        const items = mapToArr(hotels.results).map(hotel => (
             <li key={hotel.id}>
                 <NavLink to={`/hotels/${hotel.id}`}>
                     {hotel.name}
@@ -25,7 +32,7 @@ class Hotels extends React.Component {
         return (
             <div>
                 <h1>Please, select a hotel</h1>
-                <ul>{hotels}</ul>
+                <ul>{items}</ul>
             </div>
         );
     }

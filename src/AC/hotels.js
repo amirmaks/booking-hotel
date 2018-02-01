@@ -2,11 +2,11 @@ import {API_HOSTNAME, API_WITHOUT_PARAMS, LOAD_ALL_HOTELS, LOAD_HOTEL} from "../
 
 import {stringify} from 'qs';
 
-export function loadAllHotels(userId) {
+export function loadAllHotels(user_id) {
     const params = {
         ...API_WITHOUT_PARAMS,
         ...{
-            user_id: userId,
+            user_id,
             as_json: 1,
             category_id: 19
         }

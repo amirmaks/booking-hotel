@@ -7,7 +7,7 @@ const HotelRecord = Record({
     name: undefined,
     image: undefined,
     hotel_rooms_types: [],
-    singleLoaded: false
+    loaded: false
 });
 
 const ReducerState = Record({
@@ -37,7 +37,7 @@ export default function (hotelsState = new ReducerState(), action) {
                     new HotelRecord(response.results[0])
                 )
                 .setIn(
-                    ['results', +payload.id, 'singleLoaded'],
+                    ['results', +payload.id, 'loaded'],
                     true
                 );
 
