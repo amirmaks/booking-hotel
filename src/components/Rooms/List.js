@@ -10,7 +10,7 @@ class RoomsList extends React.Component {
     };
 
     state = {
-        activeRoomId: ''
+        activeRoomId: 0
     };
 
     changeActiveRoomId = (roomId) => {

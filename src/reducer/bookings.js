@@ -5,6 +5,9 @@ import {arrToMap} from "../helpers";
 const BookingRecord = Record({
     id: undefined,
     user_name: undefined,
+    user_email: undefined,
+    user_phone: undefined,
+    comment: undefined,
     date_start: undefined,
     date_end: undefined,
 });

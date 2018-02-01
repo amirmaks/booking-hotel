@@ -6,7 +6,7 @@ const RoomRecord = Record({
     id: undefined,
     name: undefined,
     text: undefined,
-    bookingIds: []
+    bookingIds: undefined
 });
 
 const ReducerState = Record({
