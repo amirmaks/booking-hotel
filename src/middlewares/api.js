@@ -1,4 +1,5 @@
 import {START, SUCCESS, FAIL} from "../constants";
+import 'whatwg-fetch';
 
 export default store => next => action => {
     const {callApi, type, ...rest} = action;

@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {loadAllBookings} from "../../AC/bookings";
 import {connect} from "react-redux";
+import BigCalendar from "react-big-calendar";
+import moment from "moment";
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import {convertBookingToBigCalendar} from "../../helpers";
+
+BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
+
 
 class BookingsList extends React.Component {
     static propTypes = {
@@ -32,30 +39,16 @@ class BookingsList extends React.Component {
         } else if(room.bookingIds && room.bookingIds.length === 0) {
             returnContent = <div>No bookings</div>
         } else {
-            let rows = room.bookingIds.map(booking_id => {
-                let item = bookings.results.get(booking_id);
 
-                return <tr key={booking_id}>
-                    <td>{item.id}</td>
-                    <td>{item.user_name}</td>
-                    <td>{item.user_email}</td>
-                    <td>{item.user_phone}</td>
-                    <td>{item.comment}</td>
-                </tr>
+            const events = room.bookingIds.map(bookingId => {
+                let item = bookings.results.get(bookingId);
+                return convertBookingToBigCalendar(item);
             });
 
-            returnContent = <table border="1">
-                <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Comment</th>
-                </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </table>;
+            returnContent = <BigCalendar
+                events={events}
+                defaultDate={new Date()}
+            />
         }
 
         return (
