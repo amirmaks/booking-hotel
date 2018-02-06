@@ -34,7 +34,7 @@ export default function (roomsState = new ReducerState(), action) {
         case LOAD_ALL_BOOKINGS + SUCCESS:
             return roomsState
                 .setIn(
-                    ['results', payload.roomId, 'bookingIds'],
+                    ['results', +payload.roomId, 'bookingIds'],
                     response.results.map(booking => booking.id)
                 );
 

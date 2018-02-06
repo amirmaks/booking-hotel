@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class RoomsFilter extends React.Component {
+class RoomFilter extends React.Component {
 
     static propTypes = {
         // from props
@@ -55,4 +55,4 @@ class RoomsFilter extends React.Component {
     }
 }
 
-export default RoomsFilter;
+export default RoomFilter;

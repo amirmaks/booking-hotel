@@ -1,5 +1,5 @@
+// export const API_HOSTNAME = 'http://gotravelto.kz/api/v1/';
 export const API_HOSTNAME = 'http://gotravel.openspace.dev/api/v1/';
-export const DATA_LIMIT = 20;
 export const API_WITHOUT_PARAMS = {
     without_coordinates :  1,
     without_object_relations :  1,
