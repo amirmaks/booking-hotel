@@ -40,10 +40,13 @@ class RoomBookings extends React.Component {
         }
 
         return (
-            <BigCalendar
-                events={events}
-                defaultDate={new Date()}
-            />
+            <div>
+                <h2>Bookings. {room.name}</h2>
+                <BigCalendar
+                    events={events}
+                    defaultDate={new Date()}
+                />
+            </div>
         )
     }
 }

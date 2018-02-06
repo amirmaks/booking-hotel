@@ -7,10 +7,25 @@ import {loadAllRooms} from "../../AC/rooms";
 import {mapToArr} from "../../helpers";
 import {Route, NavLink} from "react-router-dom";
 import RoomBookings from "../Room/Bookings";
+import PropTypes from "prop-types";
 
 
 class HotelRooms extends React.Component {
 
+    static propTypes = {
+        // from route
+        history: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired,
+
+        // from state
+        hotel: PropTypes.object.isRequired,
+        rooms: PropTypes.object.isRequired,
+
+        // from props
+        loadAllRooms: PropTypes.func.isRequired,
+        loadHotel: PropTypes.func.isRequired
+    };
     getIndex = () => {
         return 'Please, select a room';
     };
@@ -20,14 +35,15 @@ class HotelRooms extends React.Component {
     };
     handleRoomFilterSubmit = (filterState) => {
         const {hotel, loadAllRooms} = this.props;
+
         if( hotel.loaded ) {
-            loadAllRooms(hotel.id, filterState.type_id)
+            loadAllRooms(hotel.id, filterState.type_id);
         }
     };
 
     componentDidMount() {
-
         const {hotel, match, loadHotel} = this.props;
+
         if( !hotel.loaded ) {
             loadHotel(match.params.hotelId);
         }
@@ -35,7 +51,8 @@ class HotelRooms extends React.Component {
 
     render() {
 
-        const {hotel, rooms, match} = this.props;
+        const {hotel, rooms, match, history} = this.props;
+
         if( !hotel.loaded ) {
             return <Loader/>
         }
@@ -49,6 +66,7 @@ class HotelRooms extends React.Component {
                 types={hotel.hotel_rooms_types}
                 onSubmit={this.handleRoomFilterSubmit}
                 hotelId={hotel.id}
+                history={history}
             />;
 
             if( rooms.loaded && rooms.count > 0 ) {
@@ -83,7 +101,6 @@ class HotelRooms extends React.Component {
             </div>
         );
     }
-
 
 }
 

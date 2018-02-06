@@ -3,9 +3,23 @@ import {connect} from 'react-redux';
 import {loadAllHotels} from "../../AC/hotels";
 import {mapToArr} from "../../helpers";
 import {NavLink} from "react-router-dom";
-import Loader from '../Loader';
+import Loader from "../Loader";
+import PropTypes from "prop-types";
 
 class HotelList extends React.Component {
+
+    static propTypes = {
+        // from route
+        history: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired,
+
+        // from state
+        hotels: PropTypes.object.isRequired,
+
+        // from props
+        loadAllHotels: PropTypes.func.isRequired
+    };
 
     componentDidMount() {
         const {hotels, loadAllHotels} = this.props;
@@ -15,6 +29,7 @@ class HotelList extends React.Component {
     }
 
     render() {
+
         const {hotels} = this.props;
 
         if( !hotels.loaded ) {

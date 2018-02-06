@@ -7,21 +7,13 @@ class RoomFilter extends React.Component {
         // from props
         types: PropTypes.array.isRequired,
         onSubmit: PropTypes.func.isRequired,
-        hotelId: PropTypes.number.isRequired
+        hotelId: PropTypes.number.isRequired,
+        history: PropTypes.object.isRequired
     };
 
     state = {
         type_id: ''
     };
-    handleChange = (ev) => {
-        this.setState({
-            [ev.target.name]: ev.target.value
-        });
-    };
-    handleSubmit = (ev) => {
-        ev.preventDefault();
-        this.props.onSubmit(this.state);
-    }
 
     componentDidMount() {
         this.props.onSubmit({
@@ -29,6 +21,17 @@ class RoomFilter extends React.Component {
             type_id: this.state.type_id
         });
     }
+    handleChange = (ev) => {
+        this.setState({
+            [ev.target.name]: ev.target.value
+        });
+    };
+    handleSubmit = (ev) => {
+        ev.preventDefault();
+        const {onSubmit, history, hotelId} = this.props;
+        onSubmit(this.state);
+        history.push(`/hotel/rooms/${hotelId}`);
+    };
 
     render() {
 
@@ -43,8 +46,7 @@ class RoomFilter extends React.Component {
                     <select
                         name="type_id"
                         value={this.state.type_id}
-                        onChange={this.handleChange}
-                    >
+                        onChange={this.handleChange}>
                         <option value="">---</option>
                         {options}
                     </select>
