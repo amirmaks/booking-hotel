@@ -1,4 +1,5 @@
-import {START, SUCCESS, LOAD_ALL_BOOKINGS} from "../constants";
+import {START, SUCCESS, LOAD_ALL_BOOKINGS,
+ADD_BOOKING} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -33,6 +34,11 @@ export default function (bookingsState = new ReducerState(), action) {
                 .mergeIn(['results'], arrToMap(response.results, BookingRecord))
                 .set('loading', false)
                 .set('loaded', true);
+
+        case ADD_BOOKING + SUCCESS:
+            const map = new OrderedMap({});
+            return bookingsState
+                .mergeIn(['results'], map.set(response.id, new BookingRecord(response)));
 
         default:
             return bookingsState;

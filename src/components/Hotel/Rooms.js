@@ -26,9 +26,18 @@ class HotelRooms extends React.Component {
         loadAllRooms: PropTypes.func.isRequired,
         loadHotel: PropTypes.func.isRequired
     };
+
     getIndex = () => {
-        return 'Please, select a room';
+        return 'Выберите номер';
     };
+
+    componentDidMount() {
+        const {hotel, match, loadHotel} = this.props;
+
+        if( !hotel.loaded ) {
+            loadHotel(match.params.hotelId);
+        }
+    }
     getBookings = ({match}) => {
         const roomId = match.params.roomId;
         return <RoomBookings roomId={roomId} key={roomId}/>;
@@ -40,14 +49,6 @@ class HotelRooms extends React.Component {
             loadAllRooms(hotel.id, filterState.type_id);
         }
     };
-
-    componentDidMount() {
-        const {hotel, match, loadHotel} = this.props;
-
-        if( !hotel.loaded ) {
-            loadHotel(match.params.hotelId);
-        }
-    }
 
     render() {
 
@@ -93,10 +94,10 @@ class HotelRooms extends React.Component {
             <div>
                 <h1>{hotel.name}</h1>
                 <div>
-                    {roomFilter || 'No rooms types'}
+                    {roomFilter || 'Нет типов номеров'}
                 </div>
                 <div>
-                    {roomList || 'No rooms'}
+                    {roomList || 'Нет номеров'}
                 </div>
             </div>
         );

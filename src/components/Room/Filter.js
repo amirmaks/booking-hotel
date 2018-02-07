@@ -42,7 +42,7 @@ class RoomFilter extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Search by types of rooms:
+                    Поиск по типам номеров:
                     <select
                         name="type_id"
                         value={this.state.type_id}
@@ -51,7 +51,7 @@ class RoomFilter extends React.Component {
                         {options}
                     </select>
                 </label>
-                <input type="submit" value="Search"/>
+                <input type="submit" value="Поиск"/>
             </form>
         )
     }

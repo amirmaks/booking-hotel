@@ -46,7 +46,7 @@ class HotelList extends React.Component {
 
         return (
             <div>
-                <h1>Please, select a hotel</h1>
+                <h1>Выберите отель:</h1>
                 <ul>{items}</ul>
             </div>
         );

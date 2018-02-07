@@ -6,6 +6,8 @@ import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {convertBookingToBigCalendar} from "../../helpers";
+import BookingFormAdd from "../Booking/Form/Add";
+import "moment/locale/ru";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -41,11 +43,13 @@ class RoomBookings extends React.Component {
 
         return (
             <div>
-                <h2>Bookings. {room.name}</h2>
+                <h2>Брони. {room.name}</h2>
                 <BigCalendar
+                    popup
                     events={events}
                     defaultDate={new Date()}
                 />
+                <BookingFormAdd roomId={room.id}/>
             </div>
         )
     }

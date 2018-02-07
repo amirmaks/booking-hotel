@@ -14,8 +14,8 @@ class App extends React.Component {
             <HashRouter>
                 <div>
                     <ul>
-                        <li><NavLink to="/">Home page</NavLink></li>
-                        <li><NavLink to="/hotel/list">Hotels</NavLink></li>
+                        <li><NavLink to="/">Главная страница</NavLink></li>
+                        <li><NavLink to="/hotel/list">Отели</NavLink></li>
                     </ul>
                     <Switch>
                         <Route exact path="/" component={Home} />

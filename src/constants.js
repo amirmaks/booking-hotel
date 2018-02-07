@@ -1,5 +1,5 @@
-// export const API_HOSTNAME = 'http://gotravelto.kz/api/v1/';
-export const API_HOSTNAME = 'http://gotravel.openspace.dev/api/v1/';
+// export const API_HOSTNAME = "http://gotravelto.kz/api/v1/";
+export const API_HOSTNAME = "http://gotravel.openspace.dev/api/v1/";
 export const API_WITHOUT_PARAMS = {
     without_coordinates :  1,
     without_object_relations :  1,
@@ -20,12 +20,16 @@ export const API_WITHOUT_PARAMS = {
     without_hotel_rooms_types: 1
 };
 
-export const START = '_START';
-export const SUCCESS = '_SUCCESS';
-export const FAIL = '_FAIL';
+export const START = "_START";
+export const SUCCESS = "_SUCCESS";
+export const FAIL = "_FAIL";
 
-export const LOAD_ALL_HOTELS = 'LOAD_ALL_HOTELS';
-export const LOAD_HOTEL = 'LOAD_HOTEL';
+export const LOAD_ALL_HOTELS = "LOAD_ALL_HOTELS";
+export const LOAD_HOTEL = "LOAD_HOTEL";
 
-export const LOAD_ALL_ROOMS = 'LOAD_ALL_ROOMS';
-export const LOAD_ALL_BOOKINGS = 'LOAD_ALL_BOOKINGS';
+export const LOAD_ALL_ROOMS = "LOAD_ALL_ROOMS";
+export const LOAD_ALL_BOOKINGS = "LOAD_ALL_BOOKINGS";
+export const ADD_BOOKING = 'ADD_BOOKING';
+
+export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
+export const POST = 'POST';

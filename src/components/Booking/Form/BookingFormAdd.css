@@ -1,0 +1,5 @@
+.BookingFormAdd input,
+.BookingFormAdd label,
+.BookingFormAdd textarea{
+    display: block;
+}
