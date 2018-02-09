@@ -1,49 +1,76 @@
 import React from "react";
-import "./BookingFormAdd.css";
+import "./Form.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import {DATE_FORMAT} from "../../../constants";
+import {DATE_FORMAT} from "../../constants";
 import {connect} from "react-redux";
-import {addBooking} from "../../../AC/bookings";
+import {addBooking, editBooking} from "../../AC/bookings";
 import PropTypes from "prop-types";
 
 class BookingFormAdd extends React.Component {
     static propTypes = {
         // from props
-        roomId: PropTypes.number.isRequired,
-        addBooking: PropTypes.func.isRequired
+        model_id: PropTypes.number.isRequired,
+        addBooking: PropTypes.func.isRequired,
+        editBooking: PropTypes.func.isRequired,
+        selectedBookingId: PropTypes.number.isRequired,
+
+        // from state
+        bookings: PropTypes.object.isRequired
     };
 
     state = {
-        user_name: 'max',
-        user_email: 'amirmaks@inbox.ru',
-        user_phone: '87751761296',
-        comment: 'some comment',
+        user_name: '',
+        user_email: '',
+        user_phone: '',
+        comment: '',
         date_start: moment(),
         date_end: moment()
     };
+
+    componentWillReceiveProps(props) {
+        const selectedBookingId = props.selectedBookingId;
+
+        if(selectedBookingId !== 0) {
+            const booking = props.bookings.results
+                .get(props.selectedBookingId);
+
+            this.setState({
+                user_name: booking.user_name,
+                user_email: booking.user_email,
+                user_phone: booking.user_phone,
+                comment: booking.comment,
+                date_start: moment(booking.date_start * 1000),
+                date_end: moment(booking.date_end * 1000),
+            });
+        }
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
     };
+
     handleChangeDateStart = (date) => {
         this.setState({
             date_start: date
         })
     };
+
     handleChangeDateEnd = (date) => {
         this.setState({
             date_end: date
         })
     };
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.addBooking({
+        const data = {
             model: 'hotel_room',
-            model_id: this.props.roomId,
+            model_id: this.props.model_id,
             user_name: this.state.user_name,
             user_email: this.state.user_email,
             user_phone: this.state.user_phone,
@@ -51,7 +78,14 @@ class BookingFormAdd extends React.Component {
             date_start: this.state.date_start.format(DATE_FORMAT),
             date_end: this.state.date_end.format(DATE_FORMAT),
             notification_disable: 1
-        });
+        };
+
+        const {selectedBookingId, editBooking, addBooking} = this.props;
+        if(selectedBookingId !== 0) {
+            editBooking(data, selectedBookingId);
+        } else {
+            addBooking(data);
+        }
     };
 
     render() {
@@ -102,12 +136,17 @@ class BookingFormAdd extends React.Component {
                                 onChange={this.handleChangeDateEnd}
                     />
                 </label>
-                <input type="submit" value="Добавить"/>
+                <input type="submit" value={this.props.selectedBookingId !== 0 ? 'Изменить' : 'Добавить'}/>
             </form>
         )
     }
 }
 
-export default connect(null, {
-    addBooking
+export default connect(state => {
+    return {
+        bookings: state.bookings
+    }
+}, {
+    addBooking,
+    editBooking
 })(BookingFormAdd);

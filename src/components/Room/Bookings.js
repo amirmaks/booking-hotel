@@ -6,7 +6,7 @@ import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {convertBookingToBigCalendar} from "../../helpers";
-import BookingFormAdd from "../Booking/Form/Add";
+import BookingForm from "../Booking/Form";
 import "moment/locale/ru";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -24,6 +24,9 @@ class RoomBookings extends React.Component {
         loadAllBookings: PropTypes.func.isRequired,
     };
 
+    state = {
+        selectedBookingId: 0
+    };
 
     componentDidMount() {
         this.props.loadAllBookings(this.props.roomId);
@@ -32,10 +35,10 @@ class RoomBookings extends React.Component {
     render() {
         const {room, bookings} = this.props;
 
-        let events = [];
+        let items = [];
 
         if(room.bookingIds) {
-            events = room.bookingIds.map(bookingId => {
+            items = room.bookingIds.map(bookingId => {
                 let item = bookings.results.get(bookingId);
                 return convertBookingToBigCalendar(item);
             });
@@ -46,12 +49,23 @@ class RoomBookings extends React.Component {
                 <h2>Брони. {room.name}</h2>
                 <BigCalendar
                     popup
-                    events={events}
+                    selectable
+                    events={items}
                     defaultDate={new Date()}
+                    onSelectEvent={this.bookingSelectHandler}
                 />
-                <BookingFormAdd roomId={room.id}/>
+                <BookingForm
+                    model_id={room.id}
+                    selectedBookingId={this.state.selectedBookingId}
+                />
             </div>
         )
+    }
+
+    bookingSelectHandler = (booking) => {
+        this.setState({
+            selectedBookingId: booking.id
+        });
     }
 }
 

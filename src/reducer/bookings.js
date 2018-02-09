@@ -1,5 +1,5 @@
 import {START, SUCCESS, LOAD_ALL_BOOKINGS,
-ADD_BOOKING} from "../constants";
+ADD_BOOKING, EDIT_BOOKING} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -39,6 +39,9 @@ export default function (bookingsState = new ReducerState(), action) {
             const map = new OrderedMap({});
             return bookingsState
                 .mergeIn(['results'], map.set(response.id, new BookingRecord(response)));
+        case EDIT_BOOKING + SUCCESS:
+            return bookingsState
+                .setIn(['results', +response.id], new BookingRecord(response));
 
         default:
             return bookingsState;

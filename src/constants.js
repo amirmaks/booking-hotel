@@ -30,6 +30,6 @@ export const LOAD_HOTEL = "LOAD_HOTEL";
 export const LOAD_ALL_ROOMS = "LOAD_ALL_ROOMS";
 export const LOAD_ALL_BOOKINGS = "LOAD_ALL_BOOKINGS";
 export const ADD_BOOKING = 'ADD_BOOKING';
+export const EDIT_BOOKING = 'EDIT_BOOKING';
 
 export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
-export const POST = 'POST';

@@ -1,9 +1,9 @@
-import {API_HOSTNAME, LOAD_ALL_BOOKINGS, ADD_BOOKING, POST, FAIL, SUCCESS, START} from "../constants";
+import {API_HOSTNAME, LOAD_ALL_BOOKINGS, ADD_BOOKING,
+    EDIT_BOOKING, FAIL, SUCCESS} from "../constants";
 import {stringify} from 'qs';
 import 'whatwg-fetch';
 
 export function loadAllBookings(roomId) {
-
     const params = {
         model: 'hotel_room',
         model_id: roomId
@@ -18,19 +18,11 @@ export function loadAllBookings(roomId) {
 
 export function addBooking(data) {
     return dispatch => {
-        dispatch({
-            type: ADD_BOOKING + START
-        });
-
         fetch(API_HOSTNAME + `booking`, {
             method: 'POST',
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
             body: stringify(data)
         })
             .then(res => res.json())
-
             .then(response => {
                 dispatch({
                     type: ADD_BOOKING + SUCCESS,
@@ -41,6 +33,28 @@ export function addBooking(data) {
             .catch(error => {
                 dispatch({
                     type: ADD_BOOKING + FAIL,
+                    error
+                })
+            });
+    }
+}
+
+export function editBooking(data, bookingId) {
+    return dispatch => {
+        fetch(API_HOSTNAME + `booking/${bookingId}`, {
+            method: 'PUT',
+            body: stringify(data)
+        })
+            .then(res => res.json())
+            .then(response => {
+                dispatch({
+                    type: EDIT_BOOKING + SUCCESS,
+                    response
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: EDIT_BOOKING + FAIL,
                     error
                 })
             });
