@@ -15,6 +15,7 @@ class BookingFormAdd extends React.Component {
         addBooking: PropTypes.func.isRequired,
         editBooking: PropTypes.func.isRequired,
         selectedBookingId: PropTypes.number.isRequired,
+        formClose: PropTypes.func.isRequired,
 
         // from state
         bookings: PropTypes.object.isRequired
@@ -32,6 +33,8 @@ class BookingFormAdd extends React.Component {
     componentWillReceiveProps(props) {
         const selectedBookingId = props.selectedBookingId;
 
+        console.log(selectedBookingId)  ;
+
         if(selectedBookingId !== 0) {
             const booking = props.bookings.results
                 .get(props.selectedBookingId);
@@ -40,9 +43,18 @@ class BookingFormAdd extends React.Component {
                 user_name: booking.user_name,
                 user_email: booking.user_email,
                 user_phone: booking.user_phone,
-                comment: booking.comment,
+                comment: booking.comment || '',
                 date_start: moment(booking.date_start * 1000),
                 date_end: moment(booking.date_end * 1000),
+            });
+        } else {
+            this.setState({
+                user_name: '',
+                user_email: '',
+                user_phone: '',
+                comment: '',
+                date_start: moment(),
+                date_end: moment(),
             });
         }
     }
@@ -80,17 +92,18 @@ class BookingFormAdd extends React.Component {
             notification_disable: 1
         };
 
-        const {selectedBookingId, editBooking, addBooking} = this.props;
+        const {selectedBookingId, editBooking, addBooking, formClose} = this.props;
         if(selectedBookingId !== 0) {
             editBooking(data, selectedBookingId);
         } else {
             addBooking(data);
         }
+        formClose();
     };
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} className="BookingFormAdd">
+            <form onSubmit={this.handleSubmit} className="Form">
                 <label>
                     Имя клиента*:
                     <input name="user_name"
@@ -137,6 +150,7 @@ class BookingFormAdd extends React.Component {
                     />
                 </label>
                 <input type="submit" value={this.props.selectedBookingId !== 0 ? 'Изменить' : 'Добавить'}/>
+                <a href="javascript:void(0)" className="button-close" onClick={this.props.formClose}>X</a>
             </form>
         )
     }

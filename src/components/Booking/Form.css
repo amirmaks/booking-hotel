@@ -1,5 +1,15 @@
-.BookingFormAdd input,
-.BookingFormAdd label,
-.BookingFormAdd textarea{
+.Form {
+    display: inline-block;
+    position: relative;
+
+}
+.Form input,
+.Form label,
+.Form textarea{
     display: block;
+}
+.Form .button-close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }

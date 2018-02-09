@@ -8,6 +8,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {convertBookingToBigCalendar} from "../../helpers";
 import BookingForm from "../Booking/Form";
 import "moment/locale/ru";
+import "./Bookings.css";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -25,12 +26,36 @@ class RoomBookings extends React.Component {
     };
 
     state = {
-        selectedBookingId: 0
+        selectedBooking: 0,
+        formIsOpen: false
     };
 
     componentDidMount() {
         this.props.loadAllBookings(this.props.roomId);
     };
+
+    formCloseHandler = () => {
+        this.setState({
+            formIsOpen: false
+        });
+    }
+
+    editHandler = (booking) => {
+        this.setState({
+            formIsOpen: true,
+            selectedBooking: booking.id
+        });
+    }
+
+    addHandler = () => {
+        this.setState({
+            selectedBooking: 0,
+        }, () => {
+            this.setState({
+                formIsOpen: true
+            })
+        })
+    }
 
     render() {
         const {room, bookings} = this.props;
@@ -45,27 +70,27 @@ class RoomBookings extends React.Component {
         }
 
         return (
-            <div>
+            <div className="Bookings">
                 <h2>Брони. {room.name}</h2>
+                <button className="button-add" onClick={this.addHandler}>Добавить</button>
                 <BigCalendar
                     popup
                     selectable
                     events={items}
                     defaultDate={new Date()}
-                    onSelectEvent={this.bookingSelectHandler}
+                    onSelectEvent={this.editHandler}
                 />
-                <BookingForm
-                    model_id={room.id}
-                    selectedBookingId={this.state.selectedBookingId}
-                />
+                <div className={ !this.state.formIsOpen ? 'form-wrapper hide' : 'form-wrapper' }>
+                    <div className="form">
+                        <BookingForm
+                          model_id={room.id}
+                          selectedBookingId={this.state.selectedBooking}
+                          formClose={this.formCloseHandler}
+                        />
+                    </div>
+                </div>
             </div>
         )
-    }
-
-    bookingSelectHandler = (booking) => {
-        this.setState({
-            selectedBookingId: booking.id
-        });
     }
 }
 
