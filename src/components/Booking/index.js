@@ -8,7 +8,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {convertBookingToBigCalendar} from "../../helpers";
 import BookingForm from "../Booking/Form";
 import "moment/locale/ru";
-import "./Bookings.css";
+import "./index.css";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 

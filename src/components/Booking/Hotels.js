@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 import Loader from "../Loader";
 import PropTypes from "prop-types";
 
-class HotelList extends React.Component {
+class BookingHotels extends React.Component {
 
     static propTypes = {
         // from route
@@ -38,7 +38,7 @@ class HotelList extends React.Component {
 
         const items = mapToArr(hotels.results).map(hotel => (
             <li key={hotel.id}>
-                <NavLink to={`/hotel/rooms/${hotel.id}`}>
+                <NavLink to={`/booking/rooms/${hotel.id}`}>
                     {hotel.name}
                 </NavLink>
             </li>
@@ -59,4 +59,4 @@ export default connect(state => {
     }
 }, {
     loadAllHotels
-})(HotelList);
+})(BookingHotels);

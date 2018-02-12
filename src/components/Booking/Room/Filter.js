@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class RoomFilter extends React.Component {
+class BookingRoomFilter extends React.Component {
 
     static propTypes = {
         // from props
@@ -30,7 +30,7 @@ class RoomFilter extends React.Component {
         ev.preventDefault();
         const {onSubmit, history, hotelId} = this.props;
         onSubmit(this.state);
-        history.push(`/hotel/rooms/${hotelId}`);
+        history.push(`/booking/rooms/${hotelId}`);
     };
 
     render() {
@@ -47,7 +47,7 @@ class RoomFilter extends React.Component {
                         name="type_id"
                         value={this.state.type_id}
                         onChange={this.handleChange}>
-                        <option value="">---</option>
+                        <option value="">Все</option>
                         {options}
                     </select>
                 </label>
@@ -57,4 +57,4 @@ class RoomFilter extends React.Component {
     }
 }
 
-export default RoomFilter;
+export default BookingRoomFilter;

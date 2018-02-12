@@ -2,8 +2,8 @@ import React from 'react';
 import {HashRouter, Switch, Route, NavLink} from 'react-router-dom';
 
 import Home from "./Home";
-import HotelList from './Hotel/List';
-import HotelRooms from './Hotel/Rooms';
+import BookingHotels from './Booking/Hotels';
+import BookingRooms from './Booking/Rooms';
 
 import Error from "./Error";
 import NotFound from './NotFound';
@@ -15,12 +15,12 @@ class App extends React.Component {
                 <div>
                     <ul>
                         <li><NavLink to="/">Главная страница</NavLink></li>
-                        <li><NavLink to="/hotel/list">Отели</NavLink></li>
+                        <li><NavLink to="/booking/hotels">Брони</NavLink></li>
                     </ul>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/hotel/list" component={HotelList} />
-                        <Route path="/hotel/rooms/:hotelId" component={HotelRooms} />
+                        <Route exact path="/booking/hotels" component={BookingHotels} />
+                        <Route path="/booking/rooms/:hotelId" component={BookingRooms} />
 
                         <Route path="/error" component={Error} />
                         <Route path="*" component={NotFound}/>

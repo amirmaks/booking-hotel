@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {loadHotel} from "../../AC/hotels";
-import RoomFilter from '../Room/Filter';
+import RoomFilter from './Room/Filter';
 import Loader from '../Loader';
 import {loadAllRooms} from "../../AC/rooms";
 import {mapToArr} from "../../helpers";
 import {Route, NavLink} from "react-router-dom";
-import RoomBookings from "../Room/Bookings";
+import Booking from "./";
 import PropTypes from "prop-types";
 
 
-class HotelRooms extends React.Component {
+class BookingRooms extends React.Component {
 
     static propTypes = {
         // from route
@@ -38,10 +38,12 @@ class HotelRooms extends React.Component {
             loadHotel(match.params.hotelId);
         }
     }
+
     getBookings = ({match}) => {
         const roomId = match.params.roomId;
-        return <RoomBookings roomId={roomId} key={roomId}/>;
+        return <Booking roomId={roomId} key={roomId}/>;
     };
+
     handleRoomFilterSubmit = (filterState) => {
         const {hotel, loadAllRooms} = this.props;
 
@@ -74,7 +76,7 @@ class HotelRooms extends React.Component {
 
                 const items = mapToArr(rooms.results).map(room => (
                     <li key={room.id}>
-                        <NavLink to={`/hotel/rooms/${match.params.hotelId}/${room.id}`}>
+                        <NavLink to={`/booking/rooms/${match.params.hotelId}/${room.id}`}>
                             {room.name}
                         </NavLink>
                     </li>
@@ -83,8 +85,8 @@ class HotelRooms extends React.Component {
                 roomList = (
                     <div>
                         <ul>{items}</ul>
-                        <Route path='/hotel/rooms/:hotelId/' render={this.getIndex} exact/>
-                        <Route path='/hotel/rooms/:hotelId/:roomId' render={this.getBookings} />
+                        <Route path='/booking/rooms/:hotelId/' render={this.getIndex} exact/>
+                        <Route path='/booking/rooms/:hotelId/:roomId' render={this.getBookings} />
                     </div>
                 );
             }
@@ -113,4 +115,4 @@ export default connect((state, ownProps) => {
 }, {
     loadHotel,
     loadAllRooms
-})(HotelRooms);
+})(BookingRooms);
