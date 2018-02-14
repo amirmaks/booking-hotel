@@ -33,7 +33,7 @@ class BookingRooms extends React.Component {
     };
 
     componentDidMount() {
-        const {hotel, match, loadHotel, roomsTypes, loadAllRoomsTypes} = this.props;
+        const {hotel, match, loadHotel} = this.props;
 
         if( !hotel.loaded ) {
             loadHotel(match.params.hotelId);
@@ -41,7 +41,7 @@ class BookingRooms extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        if(props.hotel.loaded && props.hotel.roomsTypesIds.length === 0) {
+        if( !props.hotel.roomsTypesIds ) {
             props.loadAllRoomsTypes(props.hotel.id);
         }
     }
@@ -61,7 +61,7 @@ class BookingRooms extends React.Component {
 
     render() {
 
-        const {hotel, rooms, match, history, roomsTypes} = this.props;
+        const {hotel, rooms, match, history} = this.props;
 
         if( !hotel.loaded ) {
             return <Loader/>
@@ -70,7 +70,7 @@ class BookingRooms extends React.Component {
         let roomFilter = null;
         let roomList = null;
 
-        if( hotel.roomsTypesIds.length > 0 ) {
+        if( hotel.roomsTypesIds && hotel.roomsTypesIds.length > 0 ) {
 
             roomFilter = <RoomFilter
                 types={hotel.roomsTypesIds}
@@ -117,8 +117,7 @@ class BookingRooms extends React.Component {
 export default connect((state, ownProps) => {
     return {
         hotel: state.hotels.results.get(+ownProps.match.params.hotelId) || {},
-        rooms: state.rooms,
-        roomsTypes: state.roomsTypes
+        rooms: state.rooms
     }
 }, {
     loadHotel,

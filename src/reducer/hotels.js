@@ -7,7 +7,7 @@ const HotelRecord = Record({
     id: undefined,
     name: undefined,
     image: undefined,
-    roomsTypesIds: [],
+    roomsTypesIds: undefined,
     loaded: false
 });
 

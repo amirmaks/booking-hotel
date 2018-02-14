@@ -1,5 +1,5 @@
 import {START, SUCCESS, LOAD_ALL_ROOMS_TYPES, EDIT_ROOMS_TYPE,
-ADD_ROOMS_TYPE, DELETE_ROOMS_TYPE} from "../constants";
+ADD_ROOMS_TYPE} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -17,7 +17,7 @@ const ReducerState = Record({
 });
 
 export default function (roomsTypesState = new ReducerState(), action) {
-    const {type, response, payload} = action;
+    const {type, response} = action;
 
     switch (type) {
         case LOAD_ALL_ROOMS_TYPES + START:

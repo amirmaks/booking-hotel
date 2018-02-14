@@ -18,14 +18,10 @@ class HotelRoomsTypes extends React.Component {
     state = {
         name_ru: '',
         text_ru: '',
-        object_id: ''
+        object_id: this.props.hotelId
     }
 
     componentWillReceiveProps(props) {
-        this.setState({
-            object_id: props.hotelId
-        });
-
         if( props.id !== 0 ) {
             let entry = props.roomsTypes.results.get(+props.id);
             this.setState({
@@ -44,7 +40,7 @@ class HotelRoomsTypes extends React.Component {
         e.preventDefault();
         const {id, addRoomsType, editRoomsType, formClose} = this.props;
         if( id !== 0 ) {
-            editRoomsType(this.state, this.props.id);
+            editRoomsType(this.state, id);
         } else {
             addRoomsType(this.state);
         }

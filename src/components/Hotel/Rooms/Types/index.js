@@ -3,9 +3,6 @@ import {connect} from "react-redux";
 import {loadHotel} from "../../../../AC/hotels";
 import {loadAllRoomsTypes, deleteRoomsType} from "../../../../AC/roomsTypes";
 import Loader from "../../../Loader";
-// import {mapToArr} from "../../../../helpers";
-// import {Route, NavLink} from "react-router-dom";
-// import Booking from "./";
 import PropTypes from "prop-types";
 import "./index.css";
 import Form from "./Form";
@@ -26,7 +23,7 @@ class HotelRoomsTypes extends React.Component {
     }
 
     componentDidMount() {
-        const {hotel, match, loadHotel} = this.props;
+        const {hotel, match, loadHotel, loadAllRoomsTypes} = this.props;
 
         if( !hotel.loaded ) {
             loadHotel(match.params.hotelId);
@@ -34,7 +31,7 @@ class HotelRoomsTypes extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        if(props.hotel.loaded && props.hotel.roomsTypesIds.length === 0) {
+        if( !props.hotel.roomsTypesIds ) {
             props.loadAllRoomsTypes(props.hotel.id);
         }
     }
@@ -60,13 +57,7 @@ class HotelRoomsTypes extends React.Component {
     }
 
     deleteHandler = (id, hotelId) => {
-
         if( ! window.confirm('Восстановление не будет возможным') ) return;
-
-        this.setState({
-            id: 0
-        });
-
         this.props.deleteRoomsType(id, hotelId);
     }
 
@@ -80,7 +71,7 @@ class HotelRoomsTypes extends React.Component {
 
         let content = null;
 
-        if(hotel.roomsTypesIds.length > 0) {
+        if( hotel.roomsTypesIds &&  hotel.roomsTypesIds.length > 0 ) {
             const list = hotel.roomsTypesIds.map(type => (
                 <tr key={type}>
                     <td>{roomsTypes.results.get(+type).name}</td>
