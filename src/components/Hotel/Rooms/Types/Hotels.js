@@ -1,13 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {loadAllHotels} from "../../AC/hotels";
-import {mapToArr} from "../../helpers";
+import {loadAllHotels} from "../../../../AC/hotels";
+import {mapToArr} from "../../../../helpers";
 import {NavLink} from "react-router-dom";
-import Loader from "../Loader";
+import Loader from "../../../Loader";
 import PropTypes from "prop-types";
 
-class BookingHotels extends React.Component {
-
+class HotelRoomsTypesHotels extends React.Component {
     static propTypes = {
         // from state
         hotels: PropTypes.object.isRequired,
@@ -31,7 +30,7 @@ class BookingHotels extends React.Component {
 
         const items = mapToArr(hotels.results).map(hotel => (
             <li key={hotel.id}>
-                <NavLink to={`/booking/rooms/${hotel.id}`}>
+                <NavLink to={`/hotel/rooms/types/${hotel.id}`}>
                     {hotel.name}
                 </NavLink>
             </li>
@@ -52,4 +51,4 @@ export default connect(state => {
     }
 }, {
     loadAllHotels
-})(BookingHotels);
+})(HotelRoomsTypesHotels);

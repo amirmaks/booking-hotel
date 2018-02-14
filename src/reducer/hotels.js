@@ -1,4 +1,5 @@
-import {START, SUCCESS, LOAD_ALL_HOTELS, LOAD_HOTEL} from "../constants";
+import {START, SUCCESS, LOAD_ALL_HOTELS, LOAD_HOTEL,
+LOAD_ALL_ROOMS_TYPES, ADD_ROOMS_TYPE, DELETE_ROOMS_TYPE} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -6,7 +7,7 @@ const HotelRecord = Record({
     id: undefined,
     name: undefined,
     image: undefined,
-    hotel_rooms_types: [],
+    roomsTypesIds: [],
     loaded: false
 });
 
@@ -40,6 +41,35 @@ export default function (hotelsState = new ReducerState(), action) {
                     ['results', +payload.id, 'loaded'],
                     true
                 );
+
+        case LOAD_ALL_ROOMS_TYPES + SUCCESS:
+            return hotelsState
+                .setIn(
+                    ['results', +payload.hotelId, 'roomsTypesIds'],
+                    response.results.map(type => type.id)
+                );
+
+        case ADD_ROOMS_TYPE + SUCCESS:
+            return hotelsState
+                .updateIn(
+                    ['results', +payload.hotelId, 'roomsTypesIds'],
+                    roomsTypesIds => roomsTypesIds.concat(response.id)
+                );
+
+        case DELETE_ROOMS_TYPE + SUCCESS:
+
+            return hotelsState
+                .updateIn(
+                    ['results', +payload.hotelId, 'roomsTypesIds'],
+                    roomsTypesIds => {
+                        const copy = roomsTypesIds.slice();
+                        copy.splice(
+                            copy.indexOf(+payload.id),
+                            1
+                        );
+                        return copy;
+                    }
+                )
 
         default:
             return hotelsState;

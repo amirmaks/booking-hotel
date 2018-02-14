@@ -38,7 +38,8 @@ export default function (bookingsState = new ReducerState(), action) {
         case ADD_BOOKING + SUCCESS:
             const map = new OrderedMap({});
             return bookingsState
-                .mergeIn(['results'], map.set(response.id, new BookingRecord(response)));
+                .mergeIn(['results'], map.set(+response.id, new BookingRecord(response)));
+
         case EDIT_BOOKING + SUCCESS:
             return bookingsState
                 .setIn(['results', +response.id], new BookingRecord(response));

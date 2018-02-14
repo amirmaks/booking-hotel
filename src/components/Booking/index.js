@@ -80,8 +80,8 @@ class RoomBookings extends React.Component {
                     defaultDate={new Date()}
                     onSelectEvent={this.editHandler}
                 />
-                <div className={ !this.state.formIsOpen ? 'form-wrapper hide' : 'form-wrapper' }>
-                    <div className="form">
+                <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
+                    <div className="popup-container">
                         <BookingForm
                           model_id={room.id}
                           selectedBookingId={this.state.selectedBooking}

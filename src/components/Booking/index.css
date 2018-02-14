@@ -4,20 +4,3 @@
 .Bookings .button-add {
     margin: 0 0 10px;
 }
-.form-wrapper{
-    position: fixed;
-    z-index: 9;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-.form{
-    position: fixed;
-    z-index: 99;
-    top: 30%;
-    left: 35%;
-    padding: 15px;
-    background-color: white;
-}

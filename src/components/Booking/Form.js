@@ -1,5 +1,5 @@
 import React from "react";
-import "./Form.css";
+import "../../index.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {addBooking, editBooking} from "../../AC/bookings";
 import PropTypes from "prop-types";
 
-class BookingFormAdd extends React.Component {
+class BookingForm extends React.Component {
     static propTypes = {
         // from props
         model_id: PropTypes.number.isRequired,
@@ -32,8 +32,6 @@ class BookingFormAdd extends React.Component {
 
     componentWillReceiveProps(props) {
         const selectedBookingId = props.selectedBookingId;
-
-        console.log(selectedBookingId)  ;
 
         if(selectedBookingId !== 0) {
             const booking = props.bookings.results
@@ -103,7 +101,7 @@ class BookingFormAdd extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} className="Form">
+            <form onSubmit={this.handleSubmit} className="popup-form">
                 <label>
                     Имя клиента*:
                     <input name="user_name"
@@ -163,4 +161,4 @@ export default connect(state => {
 }, {
     addBooking,
     editBooking
-})(BookingFormAdd);
+})(BookingForm);

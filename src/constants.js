@@ -33,3 +33,8 @@ export const ADD_BOOKING = 'ADD_BOOKING';
 export const EDIT_BOOKING = 'EDIT_BOOKING';
 
 export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
+
+export const LOAD_ALL_ROOMS_TYPES = "LOAD_ALL_ROOMS_TYPES";
+export const ADD_ROOMS_TYPE = "ADD_ROOMS_TYPE";
+export const EDIT_ROOMS_TYPE = "EDIT_ROOMS_TYPE";
+export const DELETE_ROOMS_TYPE = "DELETE_ROOMS_TYPE";

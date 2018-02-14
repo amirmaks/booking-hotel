@@ -1,14 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 class BookingRoomFilter extends React.Component {
 
     static propTypes = {
         // from props
         types: PropTypes.array.isRequired,
-        onSubmit: PropTypes.func.isRequired,
         hotelId: PropTypes.number.isRequired,
-        history: PropTypes.object.isRequired
+        onSubmit: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired,
+
+        // from state
+        roomsTypes: PropTypes.object.isRequired
     };
 
     state = {
@@ -34,9 +38,10 @@ class BookingRoomFilter extends React.Component {
     };
 
     render() {
-
         const options = this.props.types.map(type => (
-            <option value={type.id} key={type.id}>{type.name}</option>
+            <option value={type} key={type}>
+                {this.props.roomsTypes.results.get(+type).name}
+            </option>
         ));
 
         return (
@@ -57,4 +62,8 @@ class BookingRoomFilter extends React.Component {
     }
 }
 
-export default BookingRoomFilter;
+export default connect(state => {
+    return {
+        roomsTypes: state.roomsTypes || {}
+    }
+})(BookingRoomFilter);
