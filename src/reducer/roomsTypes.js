@@ -40,10 +40,6 @@ export default function (roomsTypesState = new ReducerState(), action) {
             return roomsTypesState
                 .setIn(['results', +response.id], new RoomsTypeRecord(response));
 
-        // case DELETE_ROOMS_TYPE + SUCCESS:
-        //     return roomsTypesState
-        //         .deleteIn(['results', payload.id]);
-
         default:
             return roomsTypesState;
     }

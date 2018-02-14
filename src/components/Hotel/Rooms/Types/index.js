@@ -21,7 +21,8 @@ class HotelRoomsTypes extends React.Component {
     };
 
     state = {
-        id: 0
+        id: 0,
+        formIsOpen: false
     }
 
     componentDidMount() {
@@ -38,19 +39,34 @@ class HotelRoomsTypes extends React.Component {
         }
     }
 
-    handleEdit = (id) => {
+    formCloseHandler = () => {
         this.setState({
-            id
+            formIsOpen: false
         });
     }
 
-    handleAdd = () => {
+    editHandler = (id) => {
+        this.setState({
+            id,
+            formIsOpen: true
+        });
+    }
+
+    addHandler = () => {
+        this.setState({
+            id: 0,
+            formIsOpen: true
+        });
+    }
+
+    deleteHandler = (id, hotelId) => {
+
+        if( ! window.confirm('Восстановление не будет возможным') ) return;
+
         this.setState({
             id: 0
         });
-    }
 
-    handleDelete = (id, hotelId) => {
         this.props.deleteRoomsType(id, hotelId);
     }
 
@@ -69,12 +85,12 @@ class HotelRoomsTypes extends React.Component {
                 <tr key={type}>
                     <td>{roomsTypes.results.get(+type).name}</td>
                     <td>
-                        <button onClick={this.handleEdit.bind(this, type)}>
+                        <button onClick={this.editHandler.bind(this, type)}>
                             Изменить
                         </button>
                     </td>
                     <td>
-                        <button onClick={this.handleDelete.bind(this, type, hotel.id)}>
+                        <button onClick={this.deleteHandler.bind(this, type, hotel.id)}>
                             Удалить
                         </button>
                     </td>
@@ -87,9 +103,17 @@ class HotelRoomsTypes extends React.Component {
         return (
             <div className="HotelRoomsTypes">
                 <h1>{hotel.name}</h1>
-                <button className="addButton" onClick={this.handleAdd}>Добавить</button>
+                <button className="addButton" onClick={this.addHandler}>Добавить</button>
                 {content || 'Записей нет'}
-                <Form hotelId={hotel.id} id={this.state.id}/>
+                <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
+                    <div className="popup-container">
+                        <Form
+                            hotelId={hotel.id}
+                            id={this.state.id}
+                            formClose={this.formCloseHandler}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

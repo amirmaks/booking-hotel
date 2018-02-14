@@ -50,10 +50,7 @@ class RoomBookings extends React.Component {
     addHandler = () => {
         this.setState({
             selectedBooking: 0,
-        }, () => {
-            this.setState({
-                formIsOpen: true
-            })
+            formIsOpen: true
         })
     }
 

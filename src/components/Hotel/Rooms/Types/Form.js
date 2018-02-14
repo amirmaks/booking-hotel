@@ -9,6 +9,7 @@ class HotelRoomsTypes extends React.Component {
         // from props
         hotelId: PropTypes.number.isRequired,
         id: PropTypes.number.isRequired,
+        formClose: PropTypes.func.isRequired,
 
         // from state
         roomsTypes: PropTypes.object.isRequired
@@ -41,12 +42,13 @@ class HotelRoomsTypes extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const {id, addRoomsType, editRoomsType} = this.props;
+        const {id, addRoomsType, editRoomsType, formClose} = this.props;
         if( id !== 0 ) {
             editRoomsType(this.state, this.props.id);
         } else {
             addRoomsType(this.state);
         }
+        formClose();
     }
 
     handleChange = (e) => {
@@ -74,6 +76,7 @@ class HotelRoomsTypes extends React.Component {
                     />
                 </label>
                 <input type="submit" value={this.props.id !== 0 ? 'Изменить' : 'Добавить'}/>
+                <a href="javascript:void(0)" className="button-close" onClick={this.props.formClose}>X</a>
             </form>
         )
     }
