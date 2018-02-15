@@ -4,14 +4,21 @@ import {stringify} from 'qs';
 
 export function loadAllRoomsTypes(hotelId) {
 
-    const params = {
-        object_id: hotelId,
-    };
+    return (dispatch, getState) => {
 
-    return {
-        type: LOAD_ALL_ROOMS_TYPES,
-        callApi: API_HOSTNAME + `hotel_rooms_type?${stringify(params)}`,
-        payload: { hotelId }
+        const {roomsTypes} = getState();
+
+        if(roomsTypes.loading) return;
+
+        const params = {
+            object_id: hotelId,
+        };
+
+        dispatch({
+            type: LOAD_ALL_ROOMS_TYPES,
+            callApi: API_HOSTNAME + `hotel_rooms_type?${stringify(params)}`,
+            payload: { hotelId }
+        });
     }
 }
 

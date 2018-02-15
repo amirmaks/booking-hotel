@@ -28,10 +28,6 @@ class BookingRooms extends React.Component {
         loadHotel: PropTypes.func.isRequired
     };
 
-    getIndex = () => {
-        return 'Выберите номер';
-    };
-
     componentDidMount() {
         const {hotel, match, loadHotel} = this.props;
 
@@ -45,6 +41,10 @@ class BookingRooms extends React.Component {
             props.loadAllRoomsTypes(props.hotel.id);
         }
     }
+
+    getIndex = () => {
+        return 'Выберите номер';
+    };
 
     getBookings = ({match}) => {
         const roomId = match.params.roomId;

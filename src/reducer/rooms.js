@@ -1,5 +1,4 @@
-import {START, SUCCESS, LOAD_ALL_ROOMS, LOAD_ALL_BOOKINGS,
-ADD_BOOKING} from "../constants";
+import {START, SUCCESS, LOAD_ALL_ROOMS} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -31,20 +30,6 @@ export default function (roomsState = new ReducerState(), action) {
                 .set('results', arrToMap(response.results, RoomRecord))
                 .set('loading', false)
                 .set('loaded', true);
-
-        case LOAD_ALL_BOOKINGS + SUCCESS:
-            return roomsState
-                .setIn(
-                    ['results', +payload.roomId, 'bookingIds'],
-                    response.results.map(booking => booking.id)
-                );
-
-        case ADD_BOOKING + SUCCESS:
-            return roomsState
-                .updateIn(
-                    ['results', +payload.roomId, 'bookingIds'],
-                    bookingIds => bookingIds.concat(response.id)
-                );
 
         default:
             return roomsState;

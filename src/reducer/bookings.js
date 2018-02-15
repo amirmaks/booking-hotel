@@ -31,7 +31,7 @@ export default function (bookingsState = new ReducerState(), action) {
         case LOAD_ALL_BOOKINGS + SUCCESS:
             return bookingsState
                 .set('count', response.count)
-                .mergeIn(['results'], arrToMap(response.results, BookingRecord))
+                .setIn(['results'], arrToMap(response.results, BookingRecord))
                 .set('loading', false)
                 .set('loaded', true);
 

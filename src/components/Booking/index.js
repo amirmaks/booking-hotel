@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import {convertBookingToBigCalendar} from "../../helpers";
+import {convertBookingToBigCalendar, mapToArr} from "../../helpers";
 import BookingForm from "../Booking/Form";
 import "moment/locale/ru";
 import "./index.css";
@@ -20,8 +20,8 @@ class RoomBookings extends React.Component {
         roomId: PropTypes.string.isRequired,
 
         // from state
-        room: PropTypes.object.isRequired,
         bookings: PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
         loadAllBookings: PropTypes.func.isRequired,
     };
 
@@ -57,14 +57,9 @@ class RoomBookings extends React.Component {
     render() {
         const {room, bookings} = this.props;
 
-        let items = [];
-
-        if(room.bookingIds) {
-            items = room.bookingIds.map(bookingId => {
-                let item = bookings.results.get(bookingId);
-                return convertBookingToBigCalendar(item);
-            });
-        }
+        const items = bookings.results.map(booking => {
+            return convertBookingToBigCalendar(booking);
+        });
 
         return (
             <div className="Bookings">
@@ -73,7 +68,7 @@ class RoomBookings extends React.Component {
                 <BigCalendar
                     popup
                     selectable
-                    events={items}
+                    events={mapToArr(items)}
                     defaultDate={new Date()}
                     onSelectEvent={this.editHandler}
                 />

@@ -23,7 +23,7 @@ class HotelRoomsTypes extends React.Component {
     }
 
     componentDidMount() {
-        const {hotel, match, loadHotel, loadAllRoomsTypes} = this.props;
+        const {hotel, match, loadHotel} = this.props;
 
         if( !hotel.loaded ) {
             loadHotel(match.params.hotelId);
@@ -34,6 +34,12 @@ class HotelRoomsTypes extends React.Component {
         if( !props.hotel.roomsTypesIds ) {
             props.loadAllRoomsTypes(props.hotel.id);
         }
+    }
+
+    render() {
+        return (
+            <div></div>
+        )
     }
 
     formCloseHandler = () => {
