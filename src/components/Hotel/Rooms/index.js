@@ -1,24 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {loadHotel} from "../../AC/hotels";
-import RoomFilter from '../Room/Filter';
-import Loader from '../Loader';
-import {loadAllRooms} from "../../AC/rooms";
-import {mapToArr} from "../../helpers";
+import {loadHotel} from "../../../AC/hotels";
+import RoomFilter from '../../Room/Filter';
+import Loader from '../../Loader';
+import {loadAllRooms} from "../../../AC/rooms";
+import {mapToArr} from "../../../helpers";
 import {Route, NavLink} from "react-router-dom";
 import Booking from "./";
 import PropTypes from "prop-types";
-import {loadAllRoomsTypes} from "../../AC/roomsTypes";
+import {loadAllRoomsTypes} from "../../../AC/roomsTypes";
 
 
-class BookingRooms extends React.Component {
+class HotelRooms extends React.Component {
 
     static propTypes = {
-        // from route
-        history: PropTypes.object.isRequired,
-        location: PropTypes.object.isRequired,
-        match: PropTypes.object.isRequired,
-
         // from state
         hotel: PropTypes.object.isRequired,
         rooms: PropTypes.object.isRequired,
@@ -41,15 +36,6 @@ class BookingRooms extends React.Component {
             props.loadAllRoomsTypes(props.hotel.id);
         }
     }
-
-    getIndex = () => {
-        return 'Выберите номер';
-    };
-
-    getBookings = ({match}) => {
-        const roomId = match.params.roomId;
-        return <Booking roomId={roomId} key={roomId}/>;
-    };
 
     handleRoomFilterSubmit = (filterState) => {
         const {hotel, loadAllRooms} = this.props;
@@ -77,24 +63,27 @@ class BookingRooms extends React.Component {
                 onSubmit={this.handleRoomFilterSubmit}
                 hotelId={hotel.id}
                 history={history}
-                pushRoute="/booking/rooms/"
+                pushRoute="/hotel/rooms/"
             />;
 
             if( rooms.loaded && rooms.count > 0 ) {
 
                 const items = mapToArr(rooms.results).map(room => (
-                    <li key={room.id}>
-                        <NavLink to={`/booking/rooms/${match.params.hotelId}/${room.id}`}>
-                            {room.name}
-                        </NavLink>
-                    </li>
+                    <tr key={room.id}>
+                        <td>{room.name}</td>
+                        <td>
+                            <button>Изменить</button>
+                        </td>
+                        <td>
+                            <button>Удалить</button>
+                        </td>
+                    </tr>
                 ));
 
                 roomList = (
                     <div>
-                        <ul>{items}</ul>
-                        <Route path='/booking/rooms/:hotelId/' render={this.getIndex} exact/>
-                        <Route path='/booking/rooms/:hotelId/:roomId' render={this.getBookings} />
+                        <button>Добавить</button>
+                        <table border="1"><tbody>{items}</tbody></table>
                     </div>
                 );
             }
@@ -124,4 +113,4 @@ export default connect((state, ownProps) => {
     loadHotel,
     loadAllRooms,
     loadAllRoomsTypes
-})(BookingRooms);
+})(HotelRooms);

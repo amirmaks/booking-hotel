@@ -10,6 +10,7 @@ class BookingRoomFilter extends React.Component {
         hotelId: PropTypes.number.isRequired,
         onSubmit: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
+        pushRoute: PropTypes.string.isRequired,
 
         // from state
         roomsTypes: PropTypes.object.isRequired
@@ -32,9 +33,9 @@ class BookingRoomFilter extends React.Component {
     };
     handleSubmit = (ev) => {
         ev.preventDefault();
-        const {onSubmit, history, hotelId} = this.props;
+        const {onSubmit, history, hotelId, pushRoute} = this.props;
         onSubmit(this.state);
-        history.push(`/booking/rooms/${hotelId}`);
+        history.push(`${pushRoute}${hotelId}`);
     };
 
     render() {
