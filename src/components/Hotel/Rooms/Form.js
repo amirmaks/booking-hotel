@@ -1,29 +1,34 @@
 import React from "react";
-import "../../../../index.css";
+import "../../../index.css";
 import {connect} from "react-redux";
-import {addRoomsType, editRoomsType} from "../../../../AC/roomsTypes";
+import {addRoom, editRoom} from "../../../AC/rooms";
 import PropTypes from "prop-types";
 
-class HotelRoomsTypesForm extends React.Component {
+class HotelRoomsForm extends React.Component {
     static propTypes = {
         // from props
         hotelId: PropTypes.number.isRequired,
+        typeId: PropTypes.number.isRequired,
+
         id: PropTypes.number.isRequired,
         formClose: PropTypes.func.isRequired,
 
         // from state
-        roomsTypes: PropTypes.object.isRequired
+        rooms: PropTypes.object.isRequired,
+        addRoom: PropTypes.func.isRequired,
+        editRoom: PropTypes.func.isRequired
     };
 
     state = {
         name_ru: '',
         text_ru: '',
-        object_id: this.props.hotelId
+        object_id: this.props.hotelId,
+        hotel_rooms_type_id: this.props.typeId
     }
 
     componentWillReceiveProps(props) {
         if( props.id !== 0 ) {
-            let entry = props.roomsTypes.results.get(+props.id);
+            let entry = props.rooms.results.get(+props.id);
             this.setState({
                 name_ru: entry.name,
                 text_ru: entry.text || '',
@@ -38,11 +43,11 @@ class HotelRoomsTypesForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const {id, addRoomsType, editRoomsType, formClose} = this.props;
+        const {id, addRoom, editRoom, formClose} = this.props;
         if( id !== 0 ) {
-            editRoomsType(this.state, id);
+            editRoom(this.state, id);
         } else {
-            addRoomsType(this.state);
+            addRoom(this.state);
         }
         formClose();
     }
@@ -80,9 +85,9 @@ class HotelRoomsTypesForm extends React.Component {
 
 export default connect((state, ownProps) => {
     return {
-        roomsTypes: state.roomsTypes || {}
+        rooms: state.rooms || {}
     }
 }, {
-    addRoomsType,
-    editRoomsType
-})(HotelRoomsTypesForm);
+    addRoom,
+    editRoom
+})(HotelRoomsForm);

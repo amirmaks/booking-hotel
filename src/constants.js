@@ -28,9 +28,13 @@ export const LOAD_ALL_HOTELS = "LOAD_ALL_HOTELS";
 export const LOAD_HOTEL = "LOAD_HOTEL";
 
 export const LOAD_ALL_ROOMS = "LOAD_ALL_ROOMS";
+export const ADD_ROOM = "ADD_ROOM";
+export const EDIT_ROOM = "EDIT_ROOM";
+export const DELETE_ROOM = "DELETE_ROOM";
+
 export const LOAD_ALL_BOOKINGS = "LOAD_ALL_BOOKINGS";
-export const ADD_BOOKING = 'ADD_BOOKING';
-export const EDIT_BOOKING = 'EDIT_BOOKING';
+export const ADD_BOOKING = "ADD_BOOKING";
+export const EDIT_BOOKING = "EDIT_BOOKING";
 
 export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
@@ -38,3 +42,9 @@ export const LOAD_ALL_ROOMS_TYPES = "LOAD_ALL_ROOMS_TYPES";
 export const ADD_ROOMS_TYPE = "ADD_ROOMS_TYPE";
 export const EDIT_ROOMS_TYPE = "EDIT_ROOMS_TYPE";
 export const DELETE_ROOMS_TYPE = "DELETE_ROOMS_TYPE";
+
+
+export const NO_ROOMS = "Нет номеров";
+export const ADD = "Добавить";
+export const EDIT = "Изменить";
+export const DELETE = "Удалить";

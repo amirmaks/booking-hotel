@@ -5,8 +5,10 @@ import Home from "./Home";
 import HotelList from "./Hotel/List";
 
 import BookingRooms from "./Booking/Rooms";
-import HotelRoomsTypes from "./Hotel/Rooms/Types";
-import HotelRooms from "./Hotel/Rooms";
+import HotelRoomsTypesCrud from "./Hotel/Rooms/Types/Crud";
+
+import HotelRoomsTypesList from "./Hotel/Rooms/Types/List";
+import HotelRoomsCrud from "./Hotel/Rooms/Crud";
 
 import Error from "./Error";
 import NotFound from './NotFound';
@@ -42,11 +44,13 @@ class App extends React.Component {
                         <Route exact path="/booking/hotels" render={this.getHotels.bind(this, '/booking/rooms/')} />
                         <Route path="/booking/rooms/:hotelId" component={BookingRooms} />
 
-                        <Route path="/hotel/rooms/types/hotels" render={this.getHotels.bind(this, '/hotel/rooms/types/')} />
-                        <Route path="/hotel/rooms/types/:hotelId" component={HotelRoomsTypes} />
+                        <Route path="/hotel/rooms/types/hotels" render={this.getHotels.bind(this, '/hotel/rooms/types/crud/')} />
+                        <Route path="/hotel/rooms/types/crud/:hotelId" component={HotelRoomsTypesCrud} />
 
-                        <Route path="/hotel/rooms/hotels" render={this.getHotels.bind(this, '/hotel/rooms/')} />
-                        <Route path="/hotel/rooms/:hotelId" component={HotelRooms} />
+                        <Route path="/hotel/rooms/hotels" render={this.getHotels.bind(this, '/hotel/rooms/types/')} />
+                        <Route exact path="/hotel/rooms/types/:hotelId" component={HotelRoomsTypesList} />
+
+                        <Route path="/hotel/rooms/crud/:typeId/:hotelId" component={HotelRoomsCrud} />
 
                         <Route path="/error" component={Error} />
                         <Route path="*" component={NotFound}/>

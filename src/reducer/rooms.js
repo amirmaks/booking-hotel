@@ -1,4 +1,5 @@
-import {START, SUCCESS, LOAD_ALL_ROOMS} from "../constants";
+import {START, SUCCESS, LOAD_ALL_ROOMS, ADD_ROOM,
+    EDIT_ROOM, DELETE_ROOM} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -30,6 +31,19 @@ export default function (roomsState = new ReducerState(), action) {
                 .set('results', arrToMap(response.results, RoomRecord))
                 .set('loading', false)
                 .set('loaded', true);
+
+        case ADD_ROOM + SUCCESS:
+            const map = new OrderedMap({});
+            return roomsState
+                .mergeIn(['results'], map.set(+response.id, new RoomRecord(response)));
+
+        case EDIT_ROOM + SUCCESS:
+            return roomsState
+                .setIn(['results', +response.id], new RoomRecord(response));
+
+        case DELETE_ROOM + SUCCESS:
+            return roomsState
+                .deleteIn(['results', +payload.id]);
 
         default:
             return roomsState;

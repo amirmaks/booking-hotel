@@ -4,10 +4,10 @@ import {loadHotel} from "../../../../AC/hotels";
 import {loadAllRoomsTypes, deleteRoomsType} from "../../../../AC/roomsTypes";
 import Loader from "../../../Loader";
 import PropTypes from "prop-types";
-import "./index.css";
+import "./Crud.css";
 import Form from "./Form";
 
-class HotelRoomsTypes extends React.Component {
+class HotelRoomsTypesCrud extends React.Component {
 
     static propTypes = {
         // from state
@@ -34,12 +34,6 @@ class HotelRoomsTypes extends React.Component {
         if( !props.hotel.roomsTypesIds ) {
             props.loadAllRoomsTypes(props.hotel.id);
         }
-    }
-
-    render() {
-        return (
-            <div></div>
-        )
     }
 
     formCloseHandler = () => {
@@ -97,11 +91,13 @@ class HotelRoomsTypes extends React.Component {
             content = <table border="1"><tbody>{list}</tbody></table>
         }
 
+        const noEntriesMsg = <div>Нет типов номеров</div>
+
         return (
-            <div className="HotelRoomsTypes">
+            <div className="HotelRoomsTypesCrud">
                 <h1>{hotel.name}</h1>
                 <button className="addButton" onClick={this.addHandler}>Добавить</button>
-                {content || 'Записей нет'}
+                {content || noEntriesMsg}
                 <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
                     <div className="popup-container">
                         <Form
@@ -126,4 +122,4 @@ export default connect((state, ownProps) => {
     loadHotel,
     loadAllRoomsTypes,
     deleteRoomsType
-})(HotelRoomsTypes);
+})(HotelRoomsTypesCrud);
