@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {loadHotel} from "../../AC/hotels";
-import RoomFilter from '../Room/Filter';
+import RoomsFilter from './RoomsFilter';
 import Loader from '../Loader';
 import {loadAllRooms} from "../../AC/rooms";
 import {mapToArr} from "../../helpers";
@@ -9,6 +9,8 @@ import {Route, NavLink} from "react-router-dom";
 import Booking from "./";
 import PropTypes from "prop-types";
 import {loadAllRoomsTypes} from "../../AC/roomsTypes";
+import {MENU} from "../../constants";
+import BootstrapNavPill from "../BootstrapNavPill";
 
 
 class BookingRooms extends React.Component {
@@ -72,29 +74,31 @@ class BookingRooms extends React.Component {
 
         if( hotel.roomsTypesIds && hotel.roomsTypesIds.length > 0 ) {
 
-            roomFilter = <RoomFilter
+            roomFilter = <RoomsFilter
                 types={hotel.roomsTypesIds}
                 onSubmit={this.handleRoomFilterSubmit}
                 hotelId={hotel.id}
                 history={history}
-                pushRoute="/booking/rooms/"
+                pushRoute="/bookings/rooms/"
             />;
 
             if( rooms.loaded && rooms.count > 0 ) {
 
                 const items = mapToArr(rooms.results).map(room => (
-                    <li key={room.id}>
-                        <NavLink to={`/booking/rooms/${match.params.hotelId}/${room.id}`}>
-                            {room.name}
-                        </NavLink>
-                    </li>
+                    <BootstrapNavPill
+                        to={`/bookings/rooms/${match.params.hotelId}/${room.id}`}
+                        label={room.name}
+                        key={room.id}
+                    />
                 ));
 
                 roomList = (
                     <div>
-                        <ul>{items}</ul>
-                        <Route path='/booking/rooms/:hotelId/' render={this.getIndex} exact/>
-                        <Route path='/booking/rooms/:hotelId/:roomId' render={this.getBookings} />
+                        <div className="form-group">
+                            <ul className="nav nav-pills nav-stacked">{items}</ul>
+                        </div>
+                        <Route path='/bookings/rooms/:hotelId/' render={this.getIndex} exact/>
+                        <Route path='/bookings/rooms/:hotelId/:roomId' render={this.getBookings} />
                     </div>
                 );
             }
@@ -102,7 +106,11 @@ class BookingRooms extends React.Component {
 
         return (
             <div>
-                <h1>{hotel.name}</h1>
+                <ol className="breadcrumb">
+                    <li><NavLink to="/">{MENU.home.label}</NavLink></li>
+                    <li><NavLink to="/bookings">{MENU.bookings.label}</NavLink></li>
+                    <li className="active">{hotel.name}</li>
+                </ol>
                 <div>
                     {roomFilter || 'Нет типов номеров'}
                 </div>

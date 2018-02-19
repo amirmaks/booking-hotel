@@ -3,7 +3,7 @@ import "../../index.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import {DATE_FORMAT} from "../../constants";
+import {ADD, DATE_FORMAT, EDIT} from "../../constants";
 import {connect} from "react-redux";
 import {addBooking, editBooking} from "../../AC/bookings";
 import PropTypes from "prop-types";
@@ -102,53 +102,69 @@ class BookingForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
-                <label>
-                    Имя клиента*:
-                    <input name="user_name"
-                           value={this.state.user_name}
-                           onChange={this.handleChange}
-                           required
-                    />
-                </label>
-                <label>
-                    Почта клиента*:
-                    <input name="user_email"
-                           value={this.state.user_email}
-                           onChange={this.handleChange}
-                           type="email"
-                           required
-                    />
-                </label>
-                <label>
-                    Телефон клиента*:
-                    <input name="user_phone"
-                           value={this.state.user_phone}
-                           onChange={this.handleChange}
-                           type="number"
-                           required
-                    />
-                </label>
-                <label>
-                    Комментарий:
-                    <textarea name="comment"
-                           value={this.state.comment}
-                           onChange={this.handleChange}
-                    />
-                </label>
-                <label>
-                    Дата (начало):
-                    <DatePicker selected={this.state.date_start}
-                        onChange={this.handleChangeDateStart}
-                    />
-                </label>
-                <label>
-                    Дата (конец):
-                    <DatePicker selected={this.state.date_end}
-                                onChange={this.handleChangeDateEnd}
-                    />
-                </label>
-                <input type="submit" value={this.props.selectedBookingId !== 0 ? 'Изменить' : 'Добавить'}/>
-                <a href="javascript:void(0)" className="button-close" onClick={this.props.formClose}>X</a>
+                <div className="form-group">
+                    <label>
+                        Имя клиента*:
+                        <input name="user_name"
+                               value={this.state.user_name}
+                               onChange={this.handleChange}
+                               required
+                               className="form-control"
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Почта клиента*:
+                        <input name="user_email"
+                               value={this.state.user_email}
+                               onChange={this.handleChange}
+                               type="email"
+                               required
+                               className="form-control"
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Телефон клиента*:
+                        <input name="user_phone"
+                               value={this.state.user_phone}
+                               onChange={this.handleChange}
+                               type="number"
+                               required
+                               className="form-control"
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Комментарий:
+                        <textarea name="comment"
+                            value={this.state.comment}
+                            onChange={this.handleChange}
+                            className="form-control"
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Дата (начало):
+                        <DatePicker selected={this.state.date_start}
+                            onChange={this.handleChangeDateStart}
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        Дата (конец):
+                        <DatePicker selected={this.state.date_end}
+                                    onChange={this.handleChangeDateEnd}
+                        />
+                    </label>
+                </div>
+                <input type="submit" value={this.props.selectedBookingId !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
         )
     }

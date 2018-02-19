@@ -6,6 +6,7 @@ import {arrToMap} from "../helpers";
 const HotelRecord = Record({
     id: undefined,
     name: undefined,
+    short_text: undefined,
     image: undefined,
     roomsTypesIds: undefined,
     loaded: false

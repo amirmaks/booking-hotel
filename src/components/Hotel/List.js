@@ -5,6 +5,7 @@ import {mapToArr} from "../../helpers";
 import {NavLink} from "react-router-dom";
 import Loader from "../Loader";
 import PropTypes from "prop-types";
+import {MENU} from "../../constants";
 
 class HotelList extends React.Component {
 
@@ -14,7 +15,8 @@ class HotelList extends React.Component {
         loadAllHotels: PropTypes.func.isRequired,
 
         // from props
-        routePath: PropTypes.string.isRequired
+        hotelLinkPath: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired
     };
 
     componentDidMount() {
@@ -26,24 +28,35 @@ class HotelList extends React.Component {
 
     render() {
 
-        const {routePath, hotels} = this.props;
+        const {hotelLinkPath, hotels, label} = this.props;
 
         if( !hotels.loaded ) {
             return <Loader/>
         }
 
-        const items = mapToArr(hotels.results).map(hotel => (
-            <li key={hotel.id}>
-                <NavLink to={`${routePath}${hotel.id}`}>
-                    {hotel.name}
+        const items = mapToArr(hotels.results).map(hotel => {
+
+            return <div className="col-md-4" key={hotel.id}>
+                <NavLink to={`${hotelLinkPath}${hotel.id}`} className="thumbnail">
+                    <img src={hotel.image} />
+                    <div className="caption">
+                        <p>{hotel.name}</p>
+                    </div>
                 </NavLink>
-            </li>
-        ));
+
+            </div>
+        });
 
         return (
             <div>
-                <h1>Выберите отель:</h1>
-                <ul>{items}</ul>
+                <ol className="breadcrumb">
+                    <li><NavLink to="/">{MENU.home.label}</NavLink></li>
+                    <li className="active">{label}</li>
+                </ol>
+                <div className="form-group">
+                    <label className="label label-info">Выберите отель</label>
+                </div>
+                <div className="row">{items}</div>
             </div>
         );
     }

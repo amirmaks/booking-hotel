@@ -1,8 +1,9 @@
 import React from "react";
-import "../../../../index.css";
+import "../../index.css";
 import {connect} from "react-redux";
-import {addRoomsType, editRoomsType} from "../../../../AC/roomsTypes";
+import {addRoomsType, editRoomsType} from "../../AC/roomsTypes";
 import PropTypes from "prop-types";
+import {ADD, DESCRIPTION, EDIT, NAME} from "../../constants";
 
 class HotelRoomsTypesForm extends React.Component {
     static propTypes = {
@@ -45,40 +46,46 @@ class HotelRoomsTypesForm extends React.Component {
             addRoomsType(this.state);
         }
         formClose();
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
-    }
+    };
 
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
-                <label>
-                    Название*:
-                    <input name="name_ru"
-                           value={this.state.name_ru}
-                           onChange={this.handleChange}
-                           required
-                    />
-                </label>
-                <label>
-                    Описание:
-                    <textarea name="text_ru"
-                           value={this.state.text_ru}
-                           onChange={this.handleChange}
-                    />
-                </label>
-                <input type="submit" value={this.props.id !== 0 ? 'Изменить' : 'Добавить'}/>
-                <a href="javascript:void(0)" className="button-close" onClick={this.props.formClose}>X</a>
+                <div className="form-group">
+                    <label>
+                        {NAME}*:
+                        <input name="name_ru"
+                               value={this.state.name_ru}
+                               onChange={this.handleChange}
+                               required
+                               className="form-control"
+                        />
+                    </label>
+                </div>
+                <div className="form-group">
+                    <label>
+                        {DESCRIPTION}:
+                        <textarea name="text_ru"
+                                  value={this.state.text_ru}
+                                  onChange={this.handleChange}
+                                  className="form-control"
+                        />
+                    </label>
+                </div>
+                <input type="submit" value={this.props.id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
         )
     }
 }
 
-export default connect((state, ownProps) => {
+export default connect(state => {
     return {
         roomsTypes: state.roomsTypes || {}
     }

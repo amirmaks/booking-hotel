@@ -48,16 +48,17 @@ class BookingRoomFilter extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Поиск по типам номеров:
                     <select
                         name="type_id"
                         value={this.state.type_id}
-                        onChange={this.handleChange}>
+                        onChange={this.handleChange}
+                        className="form-control"
+                    >
                         <option value="">Все</option>
                         {options}
                     </select>
                 </label>
-                <input type="submit" value="Поиск"/>
+                <input type="submit" className="btn btn-default" value="Поиск"/>
             </form>
         )
     }

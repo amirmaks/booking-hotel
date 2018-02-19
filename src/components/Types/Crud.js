@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {loadHotel} from "../../../../AC/hotels";
-import {loadAllRoomsTypes, deleteRoomsType} from "../../../../AC/roomsTypes";
-import Loader from "../../../Loader";
+import {loadHotel} from "../../AC/hotels";
+import {loadAllRoomsTypes, deleteRoomsType} from "../../AC/roomsTypes";
+import Loader from "../Loader";
 import PropTypes from "prop-types";
-import "./Crud.css";
 import Form from "./Form";
+import {ADD, RESTORE_IMPOSSIBLE, NO_TYPES, MENU} from "../../constants";
+import {NavLink} from "react-router-dom";
 
 class HotelRoomsTypesCrud extends React.Component {
 
@@ -20,7 +21,7 @@ class HotelRoomsTypesCrud extends React.Component {
     state = {
         id: 0,
         formIsOpen: false
-    }
+    };
 
     componentDidMount() {
         const {hotel, match, loadHotel} = this.props;
@@ -40,26 +41,26 @@ class HotelRoomsTypesCrud extends React.Component {
         this.setState({
             formIsOpen: false
         });
-    }
+    };
 
     editHandler = (id) => {
         this.setState({
             id,
             formIsOpen: true
         });
-    }
+    };
 
     addHandler = () => {
         this.setState({
             id: 0,
             formIsOpen: true
         });
-    }
+    };
 
     deleteHandler = (id, hotelId) => {
-        if( ! window.confirm('Восстановление не будет возможным') ) return;
+        if( ! window.confirm(RESTORE_IMPOSSIBLE) ) return;
         this.props.deleteRoomsType(id, hotelId);
-    }
+    };
 
     render() {
 
@@ -76,27 +77,31 @@ class HotelRoomsTypesCrud extends React.Component {
                 <tr key={type}>
                     <td>{roomsTypes.results.get(+type).name}</td>
                     <td>
-                        <button onClick={this.editHandler.bind(this, type)}>
-                            Изменить
+                        <button onClick={this.editHandler.bind(this, type)} className="btn btn-default">
+                            <i className="glyphicon glyphicon-pencil"/>
                         </button>
-                    </td>
-                    <td>
-                        <button onClick={this.deleteHandler.bind(this, type, hotel.id)}>
-                            Удалить
+                        <button onClick={this.deleteHandler.bind(this, type, hotel.id)} className="btn btn-default">
+                            <i className="glyphicon glyphicon-remove"/>
                         </button>
                     </td>
                 </tr>
             ));
 
-            content = <table border="1"><tbody>{list}</tbody></table>
+            content = <table className="table table-striped "><tbody>{list}</tbody></table>
         }
 
-        const noEntriesMsg = <div>Нет типов номеров</div>
+        const noEntriesMsg = <div>{NO_TYPES}</div>;
 
         return (
-            <div className="HotelRoomsTypesCrud">
-                <h1>{hotel.name}</h1>
-                <button className="addButton" onClick={this.addHandler}>Добавить</button>
+            <div>
+                <ol className="breadcrumb">
+                    <li><NavLink to="/">{MENU.home.label}</NavLink></li>
+                    <li><NavLink to="/types">{MENU.types.label}</NavLink></li>
+                    <li className="active">{hotel.name}</li>
+                </ol>
+                <div className="form-group">
+                    <button className="btn btn-default" onClick={this.addHandler}>{ADD}</button>
+                </div>
                 {content || noEntriesMsg}
                 <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
                     <div className="popup-container">

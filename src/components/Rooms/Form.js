@@ -1,8 +1,9 @@
 import React from "react";
-import "../../../index.css";
+import "../../index.css";
 import {connect} from "react-redux";
-import {addRoom, editRoom} from "../../../AC/rooms";
+import {addRoom, editRoom} from "../../AC/rooms";
 import PropTypes from "prop-types";
+import {ADD, DESCRIPTION, EDIT, NAME} from "../../constants";
 
 class HotelRoomsForm extends React.Component {
     static propTypes = {
@@ -24,7 +25,7 @@ class HotelRoomsForm extends React.Component {
         text_ru: '',
         object_id: this.props.hotelId,
         hotel_rooms_type_id: this.props.typeId
-    }
+    };
 
     componentWillReceiveProps(props) {
         if( props.id !== 0 ) {
@@ -61,23 +62,27 @@ class HotelRoomsForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
+                <div className="form-group">
+                    <label>
+                        {NAME}*:
+                        <input name="name_ru"
+                               value={this.state.name_ru}
+                               onChange={this.handleChange}
+                               required
+                               className="form-control"
+                        />
+                    </label>
+                </div>
                 <label>
-                    Название*:
-                    <input name="name_ru"
-                           value={this.state.name_ru}
-                           onChange={this.handleChange}
-                           required
-                    />
-                </label>
-                <label>
-                    Описание:
+                    {DESCRIPTION}:
                     <textarea name="text_ru"
-                           value={this.state.text_ru}
-                           onChange={this.handleChange}
+                        value={this.state.text_ru}
+                        onChange={this.handleChange}
+                        className="form-control"
                     />
                 </label>
-                <input type="submit" value={this.props.id !== 0 ? 'Изменить' : 'Добавить'}/>
-                <a href="javascript:void(0)" className="button-close" onClick={this.props.formClose}>X</a>
+                <input type="submit" value={this.props.id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
         )
     }

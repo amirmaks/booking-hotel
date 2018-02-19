@@ -48,3 +48,26 @@ export const NO_ROOMS = "Нет номеров";
 export const ADD = "Добавить";
 export const EDIT = "Изменить";
 export const DELETE = "Удалить";
+export const RESTORE_IMPOSSIBLE = "Восстановление будет невозможным";
+export const NO_TYPES = "Нет типов номеров";
+export const NAME = "Название";
+export const DESCRIPTION = "Описание";
+
+export const MENU = {
+    home: {
+        label: "Главная страница"
+    },
+    bookings: {
+        hotelLinkPath: "/bookings/rooms/",
+        label: "Брони"
+    },
+    types: {
+        hotelLinkPath: "/types/crud/",
+        label: "Типы номеров"
+    },
+    rooms: {
+        hotelLinkPath: "/rooms/crud/",
+        label: "Номера"
+    },
+
+};

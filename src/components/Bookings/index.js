@@ -6,9 +6,10 @@ import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {convertBookingToBigCalendar, mapToArr} from "../../helpers";
-import BookingForm from "../Booking/Form";
+import Form from "./Form";
 import "moment/locale/ru";
 import "./index.css";
+import {ADD} from "../../constants";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -38,21 +39,21 @@ class RoomBookings extends React.Component {
         this.setState({
             formIsOpen: false
         });
-    }
+    };
 
     editHandler = (booking) => {
         this.setState({
             formIsOpen: true,
             selectedBooking: booking.id
         });
-    }
+    };
 
     addHandler = () => {
         this.setState({
             selectedBooking: 0,
             formIsOpen: true
         })
-    }
+    };
 
     render() {
         const {room, bookings} = this.props;
@@ -63,8 +64,9 @@ class RoomBookings extends React.Component {
 
         return (
             <div className="Bookings">
-                <h2>Брони. {room.name}</h2>
-                <button className="button-add" onClick={this.addHandler}>Добавить</button>
+                <div className="form-group">
+                    <button className="btn btn-default" onClick={this.addHandler}>{ADD}</button>
+                </div>
                 <BigCalendar
                     popup
                     selectable
@@ -74,7 +76,7 @@ class RoomBookings extends React.Component {
                 />
                 <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
                     <div className="popup-container">
-                        <BookingForm
+                        <Form
                           model_id={room.id}
                           selectedBookingId={this.state.selectedBooking}
                           formClose={this.formCloseHandler}
