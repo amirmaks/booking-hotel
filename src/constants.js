@@ -35,6 +35,7 @@ export const DELETE_ROOM = "DELETE_ROOM";
 export const LOAD_ALL_BOOKINGS = "LOAD_ALL_BOOKINGS";
 export const ADD_BOOKING = "ADD_BOOKING";
 export const EDIT_BOOKING = "EDIT_BOOKING";
+export const DELETE_BOOKING = "DELETE_BOOKING";
 
 export const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
 

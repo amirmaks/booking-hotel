@@ -1,5 +1,7 @@
-import {API_HOSTNAME, LOAD_ALL_BOOKINGS, ADD_BOOKING,
-    EDIT_BOOKING, FAIL, SUCCESS} from "../constants";
+import {
+    API_HOSTNAME, LOAD_ALL_BOOKINGS, ADD_BOOKING,
+    EDIT_BOOKING, FAIL, SUCCESS, DELETE_BOOKING
+} from "../constants";
 import {stringify} from 'qs';
 import 'whatwg-fetch';
 
@@ -55,6 +57,31 @@ export function editBooking(data, bookingId) {
             .catch(error => {
                 dispatch({
                     type: EDIT_BOOKING + FAIL,
+                    error
+                })
+            });
+    }
+}
+
+
+export function deleteBooking(id) {
+    return dispatch => {
+        fetch(API_HOSTNAME + `booking/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(response => {
+                dispatch({
+                    type: DELETE_BOOKING + SUCCESS,
+                    response,
+                    payload: {
+                        id
+                    }
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: DELETE_BOOKING + FAIL,
                     error
                 })
             });

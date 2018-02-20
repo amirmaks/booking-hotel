@@ -3,22 +3,23 @@ import "../../index.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import {ADD, DATE_FORMAT, EDIT} from "../../constants";
+import {ADD, DATE_FORMAT, DELETE, EDIT, RESTORE_IMPOSSIBLE} from "../../constants";
 import {connect} from "react-redux";
-import {addBooking, editBooking} from "../../AC/bookings";
+import {addBooking, editBooking, deleteBooking} from "../../AC/bookings";
 import PropTypes from "prop-types";
 
 class BookingForm extends React.Component {
     static propTypes = {
         // from props
         model_id: PropTypes.number.isRequired,
-        addBooking: PropTypes.func.isRequired,
-        editBooking: PropTypes.func.isRequired,
         selectedBookingId: PropTypes.number.isRequired,
         formClose: PropTypes.func.isRequired,
 
         // from state
-        bookings: PropTypes.object.isRequired
+        bookings: PropTypes.object.isRequired,
+        addBooking: PropTypes.func.isRequired,
+        editBooking: PropTypes.func.isRequired,
+        deleteBooking: PropTypes.func.isRequired,
     };
 
     state = {
@@ -99,7 +100,18 @@ class BookingForm extends React.Component {
         formClose();
     };
 
+    handleDelete = () => {
+        const {selectedBookingId, deleteBooking, formClose} = this.props;
+
+        if( selectedBookingId === 0 ) return;
+        if( !window.confirm(RESTORE_IMPOSSIBLE)) return;
+
+        deleteBooking(selectedBookingId);
+        formClose();
+    };
+
     render() {
+
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
                 <div className="form-group">
@@ -163,7 +175,21 @@ class BookingForm extends React.Component {
                         />
                     </label>
                 </div>
-                <input type="submit" value={this.props.selectedBookingId !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+
+                <div className="pull-left">
+                    <input type="submit" value={this.props.selectedBookingId !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                </div>
+
+                <div className="pull-right">
+                    {
+                        this.props.selectedBookingId !== 0
+                        &&
+                        <button type="button" className="btn btn-danger" onClick={this.handleDelete}>{DELETE}</button>
+                    }
+                </div>
+
+                <div className="clearfix" />
+
                 <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
         )
@@ -176,5 +202,6 @@ export default connect(state => {
     }
 }, {
     addBooking,
-    editBooking
+    editBooking,
+    deleteBooking
 })(BookingForm);

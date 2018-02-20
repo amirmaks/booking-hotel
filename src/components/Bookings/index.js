@@ -37,7 +37,8 @@ class RoomBookings extends React.Component {
 
     formCloseHandler = () => {
         this.setState({
-            formIsOpen: false
+            formIsOpen: false,
+            selectedBooking: 0
         });
     };
 

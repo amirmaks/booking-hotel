@@ -1,5 +1,7 @@
-import {START, SUCCESS, LOAD_ALL_BOOKINGS,
-ADD_BOOKING, EDIT_BOOKING} from "../constants";
+import {
+    START, SUCCESS, LOAD_ALL_BOOKINGS,
+    ADD_BOOKING, EDIT_BOOKING, DELETE_BOOKING
+} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
@@ -21,7 +23,7 @@ const ReducerState = Record({
 });
 
 export default function (bookingsState = new ReducerState(), action) {
-    const {type, response} = action;
+    const {type, response, payload} = action;
 
     switch (type) {
         case LOAD_ALL_BOOKINGS + START:
@@ -43,6 +45,11 @@ export default function (bookingsState = new ReducerState(), action) {
         case EDIT_BOOKING + SUCCESS:
             return bookingsState
                 .setIn(['results', +response.id], new BookingRecord(response));
+
+
+        case DELETE_BOOKING + SUCCESS:
+            return bookingsState
+                .deleteIn(['results', +payload.id]);
 
         default:
             return bookingsState;
