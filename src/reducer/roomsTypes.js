@@ -17,7 +17,8 @@ const ReducerState = Record({
     count: 0,
     results: new OrderedMap({}),
     loading: false,
-    loaded: false
+    loaded: false,
+    addingFiles: false
 });
 
 export default function (roomsTypesState = new ReducerState(), action) {
@@ -44,6 +45,12 @@ export default function (roomsTypesState = new ReducerState(), action) {
             return roomsTypesState
                 .setIn(['results', +response.id], new RoomsTypeRecord(response));
 
+        case ADD_FILES + START:
+            if( payload.model !== MODEL_HOTEL_ROOMS_TYPE ) return roomsTypesState;
+
+            return roomsTypesState
+                .set('addingFiles', true);
+
         case ADD_FILES + SUCCESS:
             if( payload.model !== MODEL_HOTEL_ROOMS_TYPE ) return roomsTypesState;
 
@@ -51,7 +58,8 @@ export default function (roomsTypesState = new ReducerState(), action) {
                 .updateIn(
                     ['results', +payload.modelId, 'images'],
                     images => images.concat(response)
-                );
+                )
+                .set('addingFiles', false);
 
         case DELETE_FILE + SUCCESS:
             if( payload.model !== MODEL_HOTEL_ROOMS_TYPE ) return roomsTypesState;

@@ -1,8 +1,14 @@
-import {API_HOSTNAME, ADD_FILES, DELETE_FILE, SUCCESS, FAIL} from "../constants";
-import {stringify} from 'qs';
+import {API_HOSTNAME, ADD_FILES, DELETE_FILE, SUCCESS, FAIL, START} from "../constants";
 
 export function addFiles(files, model, modelId) {
     return dispatch => {
+
+        dispatch({
+            type: ADD_FILES + START,
+            payload: {
+                model
+            }
+        });
 
         const formData = new FormData();
 

@@ -6,6 +6,7 @@ import {deleteFile} from "../../AC/files";
 import PropTypes from "prop-types";
 import {ADD, DESCRIPTION, EDIT, MODEL_HOTEL_ROOMS_TYPE, NAME, RESTORE_IMPOSSIBLE} from "../../constants";
 import FileUploader from "../File/Uploader";
+import Loader from "../Loader";
 
 class HotelRoomsTypesForm extends React.Component {
     static propTypes = {
@@ -66,6 +67,14 @@ class HotelRoomsTypesForm extends React.Component {
 
     render() {
 
+        const {roomsTypes, id} = this.props;
+        const record = roomsTypes.results.get(+id);
+
+        let fileUploader = <FileUploader model={MODEL_HOTEL_ROOMS_TYPE} modelId={id}/>;
+        if(roomsTypes.addingFiles) {
+            fileUploader = <Loader/>;
+        }
+
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
                 <div className="form-group">
@@ -90,19 +99,19 @@ class HotelRoomsTypesForm extends React.Component {
                     </label>
                 </div>
                 <div className="form-group">
-                    <input type="submit" value={this.props.id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                    <input type="submit" value={id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
                 </div>
 
                 {
-                    this.props.id !== 0 &&
+                    id !== 0 &&
                     <div>
                         <div className="form-group">
                             <label>Загрузка фото:</label>
-                            <FileUploader model={MODEL_HOTEL_ROOMS_TYPE} modelId={this.props.id}/>
+                            {fileUploader}
                         </div>
                         <div className="form-group">
                             <div className="row">
-                                {this.props.roomsTypes.results.get(+this.props.id).images.map(image => {
+                                {record.images.map(image => {
                                     let tileBgStyle = {
                                         backgroundImage: 'url('+ image.path +')'
                                     };
@@ -127,7 +136,6 @@ class HotelRoomsTypesForm extends React.Component {
                         </div>
                     </div>
                 }
-
 
                 <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
