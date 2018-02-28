@@ -19,6 +19,8 @@
     padding: 15px;
     background-color: white;
     text-align: left;
+    max-height: 500px;
+    overflow: auto;
 }
 .popup-form{
     display: inline-block;
@@ -29,4 +31,25 @@
     right: 5px;
     top: 1px;
     cursor: pointer;
+}
+
+.tile-container {
+    display: table;
+    width: 100%;
+}
+
+.tile-bg {
+    display: table-cell;
+    height: 180px;
+    vertical-align: bottom;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.tile-caption {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
 }

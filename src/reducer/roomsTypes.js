@@ -1,12 +1,16 @@
-import {START, SUCCESS, LOAD_ALL_ROOMS_TYPES, EDIT_ROOMS_TYPE,
-ADD_ROOMS_TYPE} from "../constants";
+import {
+    START, SUCCESS, LOAD_ALL_ROOMS_TYPES, EDIT_ROOMS_TYPE,
+    ADD_ROOMS_TYPE, ADD_FILES, MODEL_HOTEL_ROOMS_TYPE, DELETE_FILE
+} from "../constants";
 import {Record, OrderedMap} from 'immutable';
 import {arrToMap} from "../helpers";
 
 const RoomsTypeRecord = Record({
     id: undefined,
     name: undefined,
-    text: undefined
+    text: undefined,
+    image: undefined,
+    images: []
 });
 
 const ReducerState = Record({
@@ -17,7 +21,7 @@ const ReducerState = Record({
 });
 
 export default function (roomsTypesState = new ReducerState(), action) {
-    const {type, response} = action;
+    const {type, response, payload} = action;
 
     switch (type) {
         case LOAD_ALL_ROOMS_TYPES + START:
@@ -39,6 +43,24 @@ export default function (roomsTypesState = new ReducerState(), action) {
         case EDIT_ROOMS_TYPE + SUCCESS:
             return roomsTypesState
                 .setIn(['results', +response.id], new RoomsTypeRecord(response));
+
+        case ADD_FILES + SUCCESS:
+            if( payload.model !== MODEL_HOTEL_ROOMS_TYPE ) return roomsTypesState;
+
+            return roomsTypesState
+                .updateIn(
+                    ['results', +payload.modelId, 'images'],
+                    images => images.concat(response)
+                );
+
+        case DELETE_FILE + SUCCESS:
+            if( payload.model !== MODEL_HOTEL_ROOMS_TYPE ) return roomsTypesState;
+
+            return roomsTypesState
+                .updateIn(
+                    ['results', +payload.modelId, 'images'],
+                    images => images.filter(image => image.id !== payload.id)
+                );
 
         default:
             return roomsTypesState;

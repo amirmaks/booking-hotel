@@ -37,27 +37,27 @@ class HotelRoomsTypesCrud extends React.Component {
         }
     }
 
-    formCloseHandler = () => {
+    handleFormClose = () => {
         this.setState({
             formIsOpen: false
         });
     };
 
-    editHandler = (id) => {
+    handleEdit = (id) => {
         this.setState({
             id,
             formIsOpen: true
         });
     };
 
-    addHandler = () => {
+    handleAdd = () => {
         this.setState({
             id: 0,
             formIsOpen: true
         });
     };
 
-    deleteHandler = (id, hotelId) => {
+    handleDelete = (id, hotelId) => {
         if( ! window.confirm(RESTORE_IMPOSSIBLE) ) return;
         this.props.deleteRoomsType(id, hotelId);
     };
@@ -73,21 +73,33 @@ class HotelRoomsTypesCrud extends React.Component {
         let content = null;
 
         if( hotel.roomsTypesIds &&  hotel.roomsTypesIds.length > 0 ) {
-            const list = hotel.roomsTypesIds.map(type => (
-                <tr key={type}>
-                    <td>{roomsTypes.results.get(+type).name}</td>
-                    <td>
-                        <button onClick={this.editHandler.bind(this, type)} className="btn btn-default">
-                            <i className="glyphicon glyphicon-pencil"/>
-                        </button>
-                        <button onClick={this.deleteHandler.bind(this, type, hotel.id)} className="btn btn-default">
-                            <i className="glyphicon glyphicon-remove"/>
-                        </button>
-                    </td>
-                </tr>
-            ));
+            const items = hotel.roomsTypesIds.map(type => {
 
-            content = <table className="table table-striped "><tbody>{list}</tbody></table>
+                let tileBgStyle = {
+                    backgroundImage: 'url('+ roomsTypes.results.get(+type).image +')'
+                };
+
+                return <div className="col-sm-4" key={type}>
+                    <div className="thumbnail">
+                        <div className="tile-container">
+                            <div className="tile-bg" style={tileBgStyle}>
+                                <div className="tile-caption">
+                                    {roomsTypes.results.get(+type).name}
+                                    <button onClick={this.handleEdit.bind(this, type)} className="btn btn-default">
+                                        <i className="glyphicon glyphicon-pencil"/>
+                                    </button>
+                                    <button onClick={this.handleDelete.bind(this, type, hotel.id)}
+                                            className="btn btn-default">
+                                        <i className="glyphicon glyphicon-remove"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            });
+
+            content = <div className="row">{items}</div>
         }
 
         const noEntriesMsg = <div>{NO_TYPES}</div>;
@@ -100,7 +112,7 @@ class HotelRoomsTypesCrud extends React.Component {
                     <li className="active">{hotel.name}</li>
                 </ol>
                 <div className="form-group">
-                    <button className="btn btn-default" onClick={this.addHandler}>{ADD}</button>
+                    <button className="btn btn-default" onClick={this.handleAdd}>{ADD}</button>
                 </div>
                 {content || noEntriesMsg}
                 <div className={ !this.state.formIsOpen ? 'popup-wrapper hide' : 'popup-wrapper' }>
@@ -108,7 +120,7 @@ class HotelRoomsTypesCrud extends React.Component {
                         <Form
                             hotelId={hotel.id}
                             id={this.state.id}
-                            formClose={this.formCloseHandler}
+                            formClose={this.handleFormClose}
                         />
                     </div>
                 </div>

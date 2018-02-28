@@ -36,11 +36,18 @@ class HotelList extends React.Component {
 
         const items = mapToArr(hotels.results).map(hotel => {
 
+            let tileBgStyle = {
+                backgroundImage: 'url('+ hotel.image +')'
+            };
+
             return <div className="col-md-4" key={hotel.id}>
                 <NavLink to={`${hotelLinkPath}${hotel.id}`} className="thumbnail">
-                    <img src={hotel.image} />
-                    <div className="caption">
-                        <p>{hotel.name}</p>
+                    <div className="tile-container">
+                        <div className="tile-bg" style={tileBgStyle}>
+                            <div className="tile-caption">
+                                {hotel.name}
+                            </div>
+                        </div>
                     </div>
                 </NavLink>
 

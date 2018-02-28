@@ -1,5 +1,4 @@
 import React from "react";
-import "../../index.css";
 import {connect} from "react-redux";
 import {addRoom, editRoom} from "../../AC/rooms";
 import PropTypes from "prop-types";

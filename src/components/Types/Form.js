@@ -2,8 +2,10 @@ import React from "react";
 import "../../index.css";
 import {connect} from "react-redux";
 import {addRoomsType, editRoomsType} from "../../AC/roomsTypes";
+import {deleteFile} from "../../AC/files";
 import PropTypes from "prop-types";
-import {ADD, DESCRIPTION, EDIT, NAME} from "../../constants";
+import {ADD, DESCRIPTION, EDIT, MODEL_HOTEL_ROOMS_TYPE, NAME, RESTORE_IMPOSSIBLE} from "../../constants";
+import FileUploader from "../File/Uploader";
 
 class HotelRoomsTypesForm extends React.Component {
     static propTypes = {
@@ -11,6 +13,9 @@ class HotelRoomsTypesForm extends React.Component {
         hotelId: PropTypes.number.isRequired,
         id: PropTypes.number.isRequired,
         formClose: PropTypes.func.isRequired,
+        addRoomsType: PropTypes.func.isRequired,
+        editRoomsType: PropTypes.func.isRequired,
+        deleteFile: PropTypes.func.isRequired,
 
         // from state
         roomsTypes: PropTypes.object.isRequired
@@ -20,7 +25,7 @@ class HotelRoomsTypesForm extends React.Component {
         name_ru: '',
         text_ru: '',
         object_id: this.props.hotelId
-    }
+    };
 
     componentWillReceiveProps(props) {
         if( props.id !== 0 ) {
@@ -54,7 +59,13 @@ class HotelRoomsTypesForm extends React.Component {
         })
     };
 
+    handleDelete = (id) => {
+        if( !window.confirm(RESTORE_IMPOSSIBLE) ) return;
+        this.props.deleteFile(id, MODEL_HOTEL_ROOMS_TYPE, this.props.id);
+    };
+
     render() {
+
         return (
             <form onSubmit={this.handleSubmit} className="popup-form">
                 <div className="form-group">
@@ -78,7 +89,46 @@ class HotelRoomsTypesForm extends React.Component {
                         />
                     </label>
                 </div>
-                <input type="submit" value={this.props.id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                <div className="form-group">
+                    <input type="submit" value={this.props.id !== 0 ? EDIT : ADD} className="btn btn-primary"/>
+                </div>
+
+                {
+                    this.props.id !== 0 &&
+                    <div>
+                        <div className="form-group">
+                            <label>Загрузка фото:</label>
+                            <FileUploader model={MODEL_HOTEL_ROOMS_TYPE} modelId={this.props.id}/>
+                        </div>
+                        <div className="form-group">
+                            <div className="row">
+                                {this.props.roomsTypes.results.get(+this.props.id).images.map(image => {
+                                    let tileBgStyle = {
+                                        backgroundImage: 'url('+ image.path +')'
+                                    };
+                                    return (
+                                        <div className="col-sm-4" key={image.id}>
+                                            <div className="thumbnail">
+                                                <div className="tile-container">
+                                                    <div className="tile-bg" style={tileBgStyle}>
+                                                        <div className="tile-caption">
+                                                            <button onClick={this.handleDelete.bind(this, image.id)}
+                                                                    className="btn btn-default" type="button">
+                                                                <i className="glyphicon glyphicon-remove"/>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
                 <i className="button-close glyphicon glyphicon-remove" onClick={this.props.formClose} />
             </form>
         )
@@ -91,5 +141,6 @@ export default connect(state => {
     }
 }, {
     addRoomsType,
-    editRoomsType
+    editRoomsType,
+    deleteFile
 })(HotelRoomsTypesForm);

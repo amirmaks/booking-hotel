@@ -43,6 +43,10 @@ export const LOAD_ALL_ROOMS_TYPES = "LOAD_ALL_ROOMS_TYPES";
 export const ADD_ROOMS_TYPE = "ADD_ROOMS_TYPE";
 export const EDIT_ROOMS_TYPE = "EDIT_ROOMS_TYPE";
 export const DELETE_ROOMS_TYPE = "DELETE_ROOMS_TYPE";
+export const MODEL_HOTEL_ROOMS_TYPE = "hotel_rooms_type";
+
+export const ADD_FILES = "ADD_FILES";
+export const DELETE_FILE = "DELETE_FILE";
 
 
 export const NO_ROOMS = "Нет номеров";
